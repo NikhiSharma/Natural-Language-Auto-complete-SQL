@@ -57,7 +57,7 @@ Tested different LLMs:
 | Model | Result |
 |-------|--------|
 | **OpenAI GPT-4o-mini** | Fastest and most consistent |
-| Mistral Small 3.1 | Slower, weaker reasoning |
+| Mistral Small 3.1 | Fast but slower than OpenAI |
 | GPT-4o-quick / highspeed | Unstable for autocomplete |
 
 Final choice: **GPT-4o-mini with Responses API**  
