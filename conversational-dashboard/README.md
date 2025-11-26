@@ -1,4 +1,4 @@
-# 🚀 Conversational Analytics Assistant  
+# 🚀 Natural Language SQL Autocomplete  
 ### Natural Language → SQL → Interactive Analytics  
 **Built with Next.js, OpenAI GPT-4o-mini, and Recharts**
 
