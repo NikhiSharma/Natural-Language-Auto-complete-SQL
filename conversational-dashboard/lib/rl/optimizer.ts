@@ -27,6 +27,18 @@ type Feedback = {
  *
  * This is the optimizeSQLQuery function that implements proper reinforcement learning
  */
+export type IterationLog = {
+  iteration: number;
+  sql: string;
+  action: string;
+  state: string;
+  evaluation: { passed: boolean; feedback?: Feedback };
+  semanticMatch: boolean;
+  semanticIssues: string[];
+  reward: { total: number; constraintScore: number; qualityScore: number };
+  converged: boolean;
+};
+
 export async function optimizeSQL(
   objective: ObjectiveConfig,
   schema: Schema,
@@ -38,13 +50,14 @@ export async function optimizeSQL(
   }) => Promise<string>,
   evaluateSQL: (sql: string, explain: any, objective: any) => { passed: boolean; feedback?: Feedback },
   explainQuery: (sql: string) => any
-): Promise<{ sql: string; iterations: number; finalReward: number }> {
+): Promise<{ sql: string; iterations: number; finalReward: number; iterationLogs: IterationLog[] }> {
   // console.log("\n========== Q-LEARNING OPTIMIZER ==========");
 
   const maxIterations = objective?.loopPolicy?.maxIterations ?? 5;
   let currentSQL = "";
   let previousFeedback: Feedback | null = null;
   let finalReward = 0;
+  const iterationLogs: IterationLog[] = [];
 
   for (let iteration = 1; iteration <= maxIterations; iteration++) {
     console.log(`\n--- Iteration ${iteration} ---`);
@@ -165,6 +178,23 @@ export async function optimizeSQL(
 
     console.log(`[Optimizer] Stored experience: ${experience.id}`);
 
+    // Log this iteration
+    iterationLogs.push({
+      iteration,
+      sql: nextSQL,
+      action: selectedAction,
+      state: currentStateKey.substring(0, 80),
+      evaluation: evaluationResult,
+      semanticMatch: semanticValidation.semanticsMatch,
+      semanticIssues: semanticValidation.issues || [],
+      reward: {
+        total: reward.total,
+        constraintScore: reward.constraintScore,
+        qualityScore: reward.qualityScore,
+      },
+      converged: evaluationResult.passed && semanticValidation.semanticsMatch && reward.total >= 100,
+    });
+
     // 10. CHECK CONVERGENCE (constraints + semantics)
     if (evaluationResult.passed && semanticValidation.semanticsMatch && reward.total >= 100) {
       console.log("\n CONVERGED - SQL meets all constraints AND semantic intent!");
@@ -176,7 +206,7 @@ export async function optimizeSQL(
       // Decay epsilon
       decayEpsilon();
 
-      return { sql: nextSQL, iterations: iteration, finalReward: reward.total };
+      return { sql: nextSQL, iterations: iteration, finalReward: reward.total, iterationLogs };
     }
 
     // Partial convergence if only constraints pass (but not semantics)
@@ -198,7 +228,7 @@ export async function optimizeSQL(
   saveExperiences().catch((err) => console.error("Failed to save experiences:", err));
   decayEpsilon();
 
-  return { sql: currentSQL, iterations: maxIterations, finalReward };
+  return { sql: currentSQL, iterations: maxIterations, finalReward, iterationLogs };
 }
 
 /**

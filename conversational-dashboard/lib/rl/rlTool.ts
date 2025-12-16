@@ -30,7 +30,7 @@ const ENTITY_COLUMN_MAP: Record<string, string> = {
 
 export async function rlTool(
   rawObjective: any
-): Promise<{ sql: string; iterations?: number; finalReward?: number }> {
+): Promise<{ sql: string; iterations?: number; finalReward?: number; iterationLogs?: any[] }> {
   // 🔁 Normalize objective ONCE (critical)
   const objective = normalizeObjective(rawObjective);
 
@@ -53,6 +53,7 @@ export async function rlTool(
     sql: result.sql,
     iterations: result.iterations,
     finalReward: result.finalReward,
+    iterationLogs: result.iterationLogs,
   };
 }
 

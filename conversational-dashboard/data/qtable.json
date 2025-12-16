@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updatedAt": "2025-12-16T19:41:50.831Z",
+  "updatedAt": "2025-12-16T20:19:55.241Z",
   "hyperparams": {
     "alpha": 0.1,
     "gamma": 0.9,
-    "epsilon": 0.17294154611350673,
+    "epsilon": 0.16448645648696972,
     "epsilonDecay": 0.995,
     "epsilonMin": 0.05,
     "maxQTableSize": 10000,
@@ -33,19 +33,21 @@
       "llm_policy": 12.26961278545
     },
     "*||merchant_name IN ('Uber', 'Starbucks')||||0||0||ff0cc87a": {
-      "llm_policy": 66.12838208348188,
+      "llm_policy": 104.5458909623767,
       "add_order": 8.545
     },
     "*||||||0||0||2494e2b2": {
-      "llm_policy": 114.0583207197288,
+      "llm_policy": 214.7146982631847,
       "fix_entity": 12.716753455000001,
       "add_order": 10.045000000000002,
-      "modify_where": 18.646310442582998
+      "modify_where": 43.94260901248139,
+      "add_agg": 3.5450000000000004
     },
     "*||merchant_name = 'Starbucks'||||0||0||59a1f1dd": {
-      "llm_policy": 338.0491000365083,
-      "add_agg": 3.5450000000000004,
-      "add_order": 10.045000000000002
+      "llm_policy": 370.4912806123692,
+      "add_agg": 6.7355,
+      "add_order": 10.045000000000002,
+      "fix_entity": 115.91194276904733
     },
     "*||merchant_name = 'Starbucks'||||0||0||dc85eaaa": {
       "llm_policy": 30.186149500000003,
@@ -79,7 +81,7 @@
       "llm_policy": 2.995
     },
     "SUM(amount)||merchant_name = 'Starbucks'||SUM(AMOUNT)||0||0||59a1f1dd": {
-      "remove_agg": 24.17304503914886
+      "remove_agg": 65.09995579034721
     },
     "*||merchant_name = 'Uber'||||0||0||e25f560f": {
       "llm_policy": 77.71667791929387,
@@ -93,6 +95,28 @@
     },
     "*||merchant_name IN ('Uber', 'Starbucks')||||0||1||ff0cc87a": {
       "llm_policy": 12.742055734895501
+    },
+    "*||merchant_name = 'Uber'||||0||0||6f7ed56b": {
+      "llm_policy": 39.884288005,
+      "fix_entity": 12.716753455000001
+    },
+    "*||merchant_name = 'Uber'||||0||0||d45bd09c": {
+      "llm_policy": 49.485445124950004
+    },
+    "SUM(amount)||||SUM(AMOUNT)||0||0||2494e2b2": {
+      "llm_policy": 29.774322843686623
+    },
+    "*||||||0||0||cfb118b9": {
+      "llm_policy": 49.485445124950004
+    },
+    "*||||||0||0||94cfc070": {
+      "llm_policy": -3.005,
+      "add_where": -2.455,
+      "fix_entity": -3.5,
+      "add_agg": -1.955
+    },
+    "*||amount > 0;||||0||0||94cfc070": {
+      "llm_policy": -3.0500000000000003
     }
   }
 }

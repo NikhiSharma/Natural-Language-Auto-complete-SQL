@@ -25,6 +25,9 @@ export default function ResultsPage() {
   useEffect(() => {
     async function load() {
       setLoading(true);
+      const startTime = Date.now();
+      console.log(`[Query Execution] Starting query: ${sql}`);
+
       const res = await fetch("/api/run-query", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -32,6 +35,11 @@ export default function ResultsPage() {
       });
 
       const data = await res.json();
+      const duration = Date.now() - startTime;
+
+      console.log(`[Query Execution] Complete in ${duration}ms`);
+      console.log(`[Query Execution] Returned ${data.rows?.length || 0} rows`);
+
       setRows(data.rows || []);
       setLoading(false);
     }

@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
       sql: result.sql,
       iterations: result.iterations || 0,
       finalReward: result.finalReward || 0,
+      iterationLogs: result.iterationLogs || [],
       message: result.finalReward && result.finalReward >= 100
         ? "Fully converged - SQL meets all constraints"
         : result.finalReward && result.finalReward >= 80

@@ -36,6 +36,15 @@ export default function Home() {
   const [history, setHistory] = useState<any[]>([]);
   const [showHistory, setShowHistory] = useState(false);
 
+  // DEBUG PANEL
+  const [debugLogs, setDebugLogs] = useState<string[]>([]);
+  const [showDebug, setShowDebug] = useState(false);
+
+  const addDebugLog = (message: string) => {
+    const timestamp = new Date().toLocaleTimeString();
+    setDebugLogs((prev) => [...prev, `[${timestamp}] ${message}`]);
+  };
+
   // LOAD HISTORY
   const loadHistory = async () => {
     try {
@@ -57,22 +66,27 @@ export default function Home() {
     const clean = userInput.trim();
     if (!clean) return;
 
+    addDebugLog(`User query: "${clean}"`);
     setConversation((prev) => [...prev, { role: "user", text: clean }]);
     setUserInput("");
     setLoading(true);
 
     // Save to user history
     try {
+      addDebugLog("Saving to user history...");
       await fetch("/api/store-user-history", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ naturalText: clean }),
       });
+      addDebugLog("✓ Saved to user history");
     } catch (err) {
       console.error("Failed to save user history:", err);
+      addDebugLog("✗ Failed to save user history");
     }
 
     try {
+      addDebugLog("Generating objective function...");
       const res = await fetch("/api/objective/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -83,6 +97,8 @@ export default function Home() {
       });
 
       const data = await res.json();
+      addDebugLog(`✓ Objective function generated`);
+      addDebugLog(`Entity: ${data.objective?.entity?.identifier || "N/A"}`);
 
       setObjectiveAst(data.objective);
       setObjectiveLocked(false); // Reset lock state for new objective
@@ -95,7 +111,8 @@ export default function Home() {
           text: "Objective function generated. Review and approve it.",
         },
       ]);
-    } catch {
+    } catch (err) {
+      addDebugLog("✗ Failed to generate objective function");
       setConversation((prev) => [
         ...prev,
         { role: "assistant", text: "Failed to generate objective function." },
@@ -117,6 +134,7 @@ export default function Home() {
   const approveObjective = async () => {
     if (!objectiveAst) return;
 
+    addDebugLog("Objective approved, starting RL optimization...");
     setObjectiveLocked(true);
     setStage("optimizing");
 
@@ -126,6 +144,9 @@ export default function Home() {
     ]);
 
     try {
+      const startTime = Date.now();
+      addDebugLog("Calling /api/rl/execute...");
+
       const res = await fetch("/api/rl/execute", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -133,6 +154,29 @@ export default function Home() {
       });
 
       const data = await res.json();
+      const duration = Date.now() - startTime;
+
+      addDebugLog(`✓ RL optimization complete (${duration}ms)`);
+      addDebugLog(`Generated SQL: ${data.sql}`);
+
+      // Log iteration details
+      if (data.iterationLogs && data.iterationLogs.length > 0) {
+        addDebugLog(`\n=== RL OPTIMIZATION LOOPS (${data.iterationLogs.length} iterations) ===`);
+        data.iterationLogs.forEach((log: any) => {
+          addDebugLog(`\n--- Iteration ${log.iteration} ---`);
+          addDebugLog(`Action: ${log.action}`);
+          addDebugLog(`Evaluation: ${log.evaluation.passed ? "PASS ✓" : "FAIL ✗"}`);
+          addDebugLog(`Semantic Match: ${log.semanticMatch ? "YES ✓" : "NO ✗"}`);
+          if (log.semanticIssues && log.semanticIssues.length > 0) {
+            addDebugLog(`Semantic Issues: ${log.semanticIssues.join(", ")}`);
+          }
+          addDebugLog(`Reward: ${log.reward.total} (constraint: ${log.reward.constraintScore}, quality: ${log.reward.qualityScore})`);
+          addDebugLog(`SQL: ${log.sql.substring(0, 80)}...`);
+          addDebugLog(`Converged: ${log.converged ? "YES ✓" : "NO ✗"}`);
+        });
+        addDebugLog(`\n=== END LOOPS ===`);
+      }
+
       setSql(data.sql);
       setStage("sql");
 
@@ -140,7 +184,8 @@ export default function Home() {
         ...prev,
         { role: "assistant", text: "Optimization complete. SQL is ready." },
       ]);
-    } catch {
+    } catch (err) {
+      addDebugLog("✗ RL optimization failed");
       setConversation((prev) => [
         ...prev,
         { role: "assistant", text: "rlTool execution failed." },
@@ -196,9 +241,39 @@ export default function Home() {
               </button>
             )}
             <h1 className="text-4xl font-bold text-black">Quill chat</h1>
+            <button
+              onClick={() => setShowDebug(!showDebug)}
+              className="px-4 py-2 bg-blue-100 hover:bg-blue-200 rounded-lg text-sm transition-colors"
+            >
+              {showDebug ? "Hide Debug" : "Show Debug"}
+            </button>
           </div>
           <p className="text-gray-500 text-sm mt-2">Ask me anything about objectiveFunctions and SQL optimization</p>
         </div>
+
+        {/* DEBUG PANEL */}
+        {showDebug && (
+          <div className="mb-4 bg-gray-900 text-green-400 rounded-lg p-4 font-mono text-xs max-h-[200px] overflow-y-auto">
+            <div className="flex items-center justify-between mb-2">
+              <span className="font-bold text-green-300">Debug Console</span>
+              <button
+                onClick={() => setDebugLogs([])}
+                className="text-red-400 hover:text-red-300 text-xs"
+              >
+                Clear
+              </button>
+            </div>
+            {debugLogs.length === 0 ? (
+              <div className="text-gray-500">No logs yet...</div>
+            ) : (
+              debugLogs.map((log, idx) => (
+                <div key={idx} className="py-1">
+                  {log}
+                </div>
+              ))
+            )}
+          </div>
+        )}
 
        <div className={`max-w-7xl mx-auto ${objectiveAst || stage === "sql" ? "flex gap-6" : "flex justify-center"}`}>
         <div className={`bg-white rounded-3xl shadow-lg border border-gray-200 overflow-hidden transition-all flex flex-col ${objectiveAst || stage === "sql" ? "flex-1" : "w-full max-w-3xl"}`}>
