@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
 import {
   PieChart, Pie, Cell,
@@ -11,7 +11,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-export default function ResultsPage() {
+function ResultsContent() {
   const params = useSearchParams();
   const sql = params.get("sql") || "";
 
@@ -213,5 +213,18 @@ export default function ResultsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ResultsPage() {
+  return (
+    <Suspense fallback={
+      <div className="p-10 text-white min-h-screen">
+        <h1 className="text-3xl font-bold mb-4">Query Results</h1>
+        <p>Loading...</p>
+      </div>
+    }>
+      <ResultsContent />
+    </Suspense>
   );
 }

@@ -2788,5 +2788,17 @@
     "sqlQuery": "SELECT SUM(amount) FROM transactions WHERE amount > 0;",
     "rowCount": 1,
     "createdAt": "2025-12-17T01:48:32.921Z"
+  },
+  {
+    "naturalText": "Select * from expenses\n",
+    "sqlQuery": "Select * from expenses\n",
+    "rowCount": 10,
+    "createdAt": "2025-12-17T02:21:47.686Z"
+  },
+  {
+    "naturalText": "select amount where merchant_name = 'Starbucks'",
+    "sqlQuery": "select amount where merchant_name = 'Starbucks'",
+    "rowCount": 3,
+    "createdAt": "2025-12-17T02:22:08.999Z"
   }
 ]
