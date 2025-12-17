@@ -3,6 +3,9 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
 
+// Force dynamic rendering for this page
+export const dynamic = 'force-dynamic';
+
 import {
   PieChart, Pie, Cell,
   BarChart, Bar,
