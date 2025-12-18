@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
 
 interface ChatMessage {
   role: "assistant" | "user";
@@ -11,7 +10,6 @@ interface ChatMessage {
 type Stage = "chat" | "objective" | "optimizing" | "sql";
 
 export default function Home() {
-  const router = useRouter();
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
     // CORE STATE
@@ -31,6 +29,7 @@ export default function Home() {
      //SQL
   const [sql, setSql] = useState("");
   const [queryResults, setQueryResults] = useState<any[] | null>(null);
+  const [isRunningQuery, setIsRunningQuery] = useState(false);
 
   // HISTORY
   const [history, setHistory] = useState<any[]>([]);
@@ -195,6 +194,36 @@ export default function Home() {
         { role: "assistant", text: "rlTool execution failed." },
       ]);
       setStage("objective");
+    }
+  };
+
+  const runQuery = async () => {
+    if (!sql) return;
+
+    setIsRunningQuery(true);
+    addDebugLog("Running SQL query...");
+
+    try {
+      const res = await fetch("/api/run-query", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sql }),
+      });
+
+      const data = await res.json();
+
+      if (data.error) {
+        addDebugLog(`✗ Query failed: ${data.error}`);
+        setQueryResults(null);
+      } else {
+        addDebugLog(`✓ Query returned ${data.rows.length} rows`);
+        setQueryResults(data.rows);
+      }
+    } catch (err: any) {
+      addDebugLog(`✗ Query execution error: ${err.message}`);
+      setQueryResults(null);
+    } finally {
+      setIsRunningQuery(false);
     }
   };
 //UI from here
@@ -372,14 +401,11 @@ export default function Home() {
               <h2 className="text-lg font-semibold text-black">SQL Query</h2>
               {sql && (
                 <button
-                  onClick={() => {
-                    if (sql) {
-                      router.push(`/results?sql=${encodeURIComponent(sql)}`);
-                    }
-                  }}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition-colors text-white"
+                  onClick={runQuery}
+                  disabled={isRunningQuery}
+                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 rounded-lg text-sm font-medium transition-colors text-white"
                 >
-                  Run Query →
+                  {isRunningQuery ? "Running..." : "Run Query"}
                 </button>
               )}
             </div>
@@ -390,6 +416,37 @@ export default function Home() {
               placeholder="SQL will appear here after approval..."
             />
           </div>
+
+          {/* Query Results */}
+          {queryResults && (
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+              <h2 className="text-lg font-semibold text-black mb-4">Query Results ({queryResults.length} rows)</h2>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-gray-200">
+                      {Object.keys(queryResults[0] || {}).map((key) => (
+                        <th key={key} className="text-left p-3 font-semibold text-gray-700">
+                          {key}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {queryResults.map((row, idx) => (
+                      <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
+                        {Object.values(row).map((val: any, i) => (
+                          <td key={i} className="p-3 text-gray-900">
+                            {val !== null && val !== undefined ? String(val) : '-'}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       </div>

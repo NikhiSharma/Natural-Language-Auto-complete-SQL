@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updatedAt": "2025-12-18T05:55:27.288Z",
+  "updatedAt": "2025-12-18T16:49:40.800Z",
   "hyperparams": {
     "alpha": 0.1,
     "gamma": 0.9,
-    "epsilon": 0.1451132816037219,
+    "epsilon": 0.14294744773662615,
     "epsilonDecay": 0.995,
     "epsilonMin": 0.05,
     "maxQTableSize": 10000,
@@ -177,6 +177,20 @@
     },
     "e.name||d.name = 'Engineering';||||0||0||3590cc78": {
       "llm_policy": 12.495000000000001
+    },
+    "e.name||||||0||0||fb1fe830": {
+      "llm_policy": 12.495000000000001
+    },
+    "e.name||e.city = 'Seattle';||||0||0||21f257a8": {
+      "llm_policy": 21.090500000000002
+    },
+    "||||||0||0||d8651d43": {
+      "llm_policy": 32.65665790415051,
+      "add_where": 14.305393550000002,
+      "add_order": 7.545000000000001
+    },
+    "||||||0||1||d8651d43": {
+      "llm_policy": 6.9791545
     }
   }
 }
