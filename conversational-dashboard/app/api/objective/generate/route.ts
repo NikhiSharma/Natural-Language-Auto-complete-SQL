@@ -2,36 +2,41 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 import { ObjectiveConfig } from "@/lib/objective/schema";
 import { OBJECTIVE_MODEL } from "@/lib/llm/models";
+import { introspectSchema } from "@/lib/schema/introspect";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
 });
 
-const SYSTEM_PROMPT = `
-You are an Objective Function Author for an employee/department database.
+async function getSchemaDescription() {
+  try {
+    const schema = await introspectSchema();
 
-DATABASE SCHEMA:
-- Table: employees
-  - Columns: employee_id (integer), name (text), city (text), department_id (integer)
+    const schemaDescription = schema.tables
+      .map((table: any) => {
+        const cols = table.columns.map((c: any) => `${c.name} (${c.type})`).join(", ");
+        return `- Table: ${table.name}\n  Columns: ${cols}`;
+      })
+      .join("\n\n");
 
-- Table: departments
-  - Columns: department_id (integer), name (text), location (text)
+    const relationshipsDescription = schema.relationships
+      .map((rel: any) => `- ${rel.from} -> ${rel.to}`)
+      .join("\n");
 
-- Table: compensation
-  - Columns: employee_id (integer), salary (numeric), reports_to (integer)
+    return { schemaDescription, relationshipsDescription };
+  } catch (err) {
+    console.error("[Objective Generate] Failed to introspect schema:", err);
+    throw new Error("Cannot generate objective without database schema");
+  }
+}
 
-- Table: teams
-  - Columns: team_id (integer), team_name (text), department_id (integer)
+const getSystemPrompt = (schemaDescription: string, relationshipsDescription: string) => `
+You are an Objective Function Author for a PostgreSQL database.
 
-- Table: employee_teams
-  - Columns: employee_id (integer), team_id (integer)
+DATABASE SCHEMA (LIVE FROM PostgreSQL):
+${schemaDescription}
 
-RELATIONSHIPS:
-- employees.department_id -> departments.department_id
-- compensation.employee_id -> employees.employee_id
-- teams.department_id -> departments.department_id
-- employee_teams.employee_id -> employees.employee_id
-- employee_teams.team_id -> teams.team_id
+${relationshipsDescription ? `FOREIGN KEY RELATIONSHIPS:\n${relationshipsDescription}` : ""}
 
 Current date: ${new Date().toLocaleDateString("en-US", {
   year: "numeric",
@@ -69,8 +74,8 @@ REQUIRED JSON SCHEMA
   },
 
   "constraints": {
-    "dataSource": "employees" | "employees_with_departments" | "employees_with_compensation",
-    "mustInclude": []
+    "dataSource": string,
+    "mustInclude": string[]
   },
 }
 
@@ -79,14 +84,12 @@ RULES
 ===========================
 - intent MUST match the user's actual request - don't add complexity
 - If no timeframe mentioned, use "RELATIVE" with value "all time"
-- If specific department/employee/city mentioned, extract it to entity.identifier
-- For MIXED entity types, use the filters array instead
-- Field names can be: name (employee), salary, city, department name
-- Know that: Engineering, Product, Design = department names
-- If department is mentioned, use dataSource "employees_with_departments" (triggers JOIN)
-- If salary is mentioned, use dataSource "employees_with_compensation" (triggers JOIN)
-- If only employee names mentioned, use dataSource "employees"
-- mustInclude should be empty array unless specific columns requested
+- If specific entity mentioned (department/employee/city), extract it to entity.identifier
+- For MIXED entity types or multiple filters, use the filters array
+- dataSource should describe which tables are needed (e.g., "employees_with_departments_and_compensation")
+- If query needs data from multiple tables, dataSource should reflect that (use "_with_" pattern)
+- mustInclude should list ALL columns the user wants to see in results
+- For WHERE conditions on specific values (like salary > 140000), add to filters array
 - Output ONLY valid JSON
 - No markdown
 - No explanations
@@ -136,11 +139,15 @@ User: "all employees"
 export async function POST(req: Request) {
   const { userInput } = await req.json();
 
+  // Fetch live schema
+  const { schemaDescription, relationshipsDescription } = await getSchemaDescription();
+  const systemPrompt = getSystemPrompt(schemaDescription, relationshipsDescription);
+
   const response = await openai.chat.completions.create({
     model: OBJECTIVE_MODEL,
     temperature: 0.2,
     messages: [
-      { role: "system", content: SYSTEM_PROMPT },
+      { role: "system", content: systemPrompt },
       { role: "user", content: userInput },
     ],
   });

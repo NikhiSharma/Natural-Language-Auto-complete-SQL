@@ -2812,5 +2812,23 @@
     "sqlQuery": "SELECT e.name, c.salary FROM employees e JOIN departments d ON e.department_id = d.department_id JOIN compensation c ON e.employee_id = c.employee_id WHERE d.name = 'Engineering'",
     "rowCount": 3,
     "createdAt": "2025-12-18T04:24:12.020Z"
+  },
+  {
+    "naturalText": "SELECT e.name\nFROM employees e\nJOIN departments d ON d.department_id = e.department_id\nWHERE d.name = 'Engineering';",
+    "sqlQuery": "SELECT e.name\nFROM employees e\nJOIN departments d ON d.department_id = e.department_id\nWHERE d.name = 'Engineering';",
+    "rowCount": 3,
+    "createdAt": "2025-12-18T05:49:44.562Z"
+  },
+  {
+    "naturalText": "SELECT\n  e.name,\n  e.city\nFROM employees AS e\nJOIN departments AS d\n  ON e.department_id = d.department_id\nWHERE d.name = 'Engineering';",
+    "sqlQuery": "SELECT\n  e.name,\n  e.city\nFROM employees AS e\nJOIN departments AS d\n  ON e.department_id = d.department_id\nWHERE d.name = 'Engineering';",
+    "rowCount": 3,
+    "createdAt": "2025-12-18T05:51:46.786Z"
+  },
+  {
+    "naturalText": "SELECT\n  e.name,\n  e.city\nFROM employees AS e\nJOIN departments AS d\n  ON e.department_id = d.department_id\nWHERE d.name = 'Engineering';",
+    "sqlQuery": "SELECT\n  e.name,\n  e.city\nFROM employees AS e\nJOIN departments AS d\n  ON e.department_id = d.department_id\nWHERE d.name = 'Engineering';",
+    "rowCount": 3,
+    "createdAt": "2025-12-18T05:52:28.324Z"
   }
 ]

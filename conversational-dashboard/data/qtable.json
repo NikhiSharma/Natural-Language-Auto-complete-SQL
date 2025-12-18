@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updatedAt": "2025-12-18T04:48:31.971Z",
+  "updatedAt": "2025-12-18T05:52:24.153Z",
   "hyperparams": {
     "alpha": 0.1,
     "gamma": 0.9,
-    "epsilon": 0.15029536870417182,
+    "epsilon": 0.14657537092873604,
     "epsilonDecay": 0.995,
     "epsilonMin": 0.05,
     "maxQTableSize": 10000,
@@ -156,7 +156,21 @@
       "llm_policy": 11.995000000000001
     },
     "c.salary,e.name||||||0||0||e0510314": {
-      "llm_policy": 164.29270963129085
+      "llm_policy": 214.27272844478014,
+      "add_agg": 4.413832466485786
+    },
+    "SUM(amount)||||SUM(AMOUNT)||0||0||e0510314": {
+      "llm_policy": 27.48147184984207
+    },
+    "e.name||d.name = 'Engineering';||||0||0||a31629fe": {
+      "llm_policy": 12.495000000000001
+    },
+    "e.name||c.salary > 140000;||||0||0||edf8b172": {
+      "add_order": 12.045000000000002
+    },
+    "||d.name = 'Engineering';||||0||0||7bf24480": {
+      "llm_policy": 130.78661643522773,
+      "modify_where": 17.564916050795166
     }
   }
 }

@@ -1,5 +1,40 @@
 [
   {
+    "naturalText": "give me all names and cities of people who are working in engineering department",
+    "createdAt": "2025-12-18T05:52:07.785Z",
+    "id": "u-1766037127785"
+  },
+  {
+    "naturalText": "give me all names and cities of people who are working in engineering department",
+    "createdAt": "2025-12-18T05:50:41.655Z",
+    "id": "u-1766037041655"
+  },
+  {
+    "naturalText": "Give me all names of people who earn more than 140000",
+    "createdAt": "2025-12-18T05:50:03.151Z",
+    "id": "u-1766037003151"
+  },
+  {
+    "naturalText": "I want employee names details of everyone who's in engineering department",
+    "createdAt": "2025-12-18T05:41:11.717Z",
+    "id": "u-1766036471717"
+  },
+  {
+    "naturalText": "I want employee names details of everyone who's in engineering department",
+    "createdAt": "2025-12-18T05:39:07.337Z",
+    "id": "u-1766036347337"
+  },
+  {
+    "naturalText": "Give me all employee names who's department is Engineering",
+    "createdAt": "2025-12-18T05:34:22.325Z",
+    "id": "u-1766036062325"
+  },
+  {
+    "naturalText": "Give me all employees names who earn more than 140000",
+    "createdAt": "2025-12-18T05:15:08.290Z",
+    "id": "u-1766034908291"
+  },
+  {
     "naturalText": "Give me all name, salary, dept of employees where salary > 140000",
     "createdAt": "2025-12-18T04:48:08.017Z",
     "id": "u-1766033288022"
