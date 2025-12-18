@@ -2800,5 +2800,41 @@
     "sqlQuery": "select amount where merchant_name = 'Starbucks'",
     "rowCount": 3,
     "createdAt": "2025-12-17T02:22:08.999Z"
+  },
+  {
+    "naturalText": "SELECT * FROM transactions WHERE merchant_name = 'Starbucks'",
+    "sqlQuery": "SELECT * FROM transactions WHERE merchant_name = 'Starbucks'",
+    "rowCount": 3,
+    "createdAt": "2025-12-18T03:02:32.844Z"
+  },
+  {
+    "naturalText": "SELECT * FROM transactions WHERE merchant_name = 'Starbucks'",
+    "sqlQuery": "SELECT * FROM transactions WHERE merchant_name = 'Starbucks'",
+    "rowCount": 3,
+    "createdAt": "2025-12-18T03:29:54.623Z"
+  },
+  {
+    "naturalText": "SELECT * FROM employees LIMIT 1",
+    "sqlQuery": "SELECT * FROM employees LIMIT 1",
+    "rowCount": 1,
+    "createdAt": "2025-12-18T03:55:23.674Z"
+  },
+  {
+    "naturalText": "\nSELECT e.name, d.name AS department, c.salary\nFROM employees e\nJOIN departments d ON e.department_id = d.department_id\nJOIN compensation c ON e.employee_id = c.employee_id\nWHERE d.name = 'Engineering';\n",
+    "sqlQuery": "\nSELECT e.name, d.name AS department, c.salary\nFROM employees e\nJOIN departments d ON e.department_id = d.department_id\nJOIN compensation c ON e.employee_id = c.employee_id\nWHERE d.name = 'Engineering';\n",
+    "rowCount": 3,
+    "createdAt": "2025-12-18T04:01:30.803Z"
+  },
+  {
+    "naturalText": "SELECT e.name FROM employees e JOIN departments d ON e.department_id = d.department_id WHERE d.name = 'Engineering'",
+    "sqlQuery": "SELECT e.name FROM employees e JOIN departments d ON e.department_id = d.department_id WHERE d.name = 'Engineering'",
+    "rowCount": 3,
+    "createdAt": "2025-12-18T04:08:10.853Z"
+  },
+  {
+    "naturalText": "SELECT e.name, c.salary FROM employees e JOIN departments d ON e.department_id = d.department_id JOIN compensation c ON e.employee_id = c.employee_id WHERE d.name = 'Engineering'",
+    "sqlQuery": "SELECT e.name, c.salary FROM employees e JOIN departments d ON e.department_id = d.department_id JOIN compensation c ON e.employee_id = c.employee_id WHERE d.name = 'Engineering'",
+    "rowCount": 3,
+    "createdAt": "2025-12-18T04:09:06.864Z"
   }
 ]

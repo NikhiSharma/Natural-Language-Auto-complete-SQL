@@ -2158,5 +2158,725 @@
     "timestamp": "2025-12-17T01:48:16.526Z",
     "objectiveHash": "04c34904",
     "id": "4e1161d9bc8867e4"
+  },
+  {
+    "stateKey": "*||merchant_name = 'Starbucks'||||0||0||a1bce4a5",
+    "action": "llm_policy",
+    "reward": 115,
+    "nextStateKey": "*||merchant_name = 'Starbucks'||||0||0||a1bce4a5",
+    "terminal": true,
+    "timestamp": "2025-12-18T03:02:19.996Z",
+    "objectiveHash": "a1bce4a5",
+    "id": "3080b3764790ee56"
+  },
+  {
+    "stateKey": "*||merchant_name = 'Starbucks'||||0||0||c2f7126b",
+    "action": "llm_policy",
+    "reward": 115,
+    "nextStateKey": "*||merchant_name = 'Starbucks'||||0||0||c2f7126b",
+    "terminal": true,
+    "timestamp": "2025-12-18T03:29:51.834Z",
+    "objectiveHash": "c2f7126b",
+    "id": "82d850e2a6e5533f"
+  },
+  {
+    "stateKey": "*||||||0||0||4448a509",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:49:43.515Z",
+    "objectiveHash": "4448a509",
+    "id": "ef2ef26135bfe7a3"
+  },
+  {
+    "stateKey": "*||||||0||0||4448a509",
+    "action": "add_where",
+    "reward": -10,
+    "nextStateKey": "*||amount > 0;||||0||0||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:49:43.517Z",
+    "objectiveHash": "4448a509",
+    "id": "308ed08fd9a7b153"
+  },
+  {
+    "stateKey": "*||amount > 0;||||0||0||4448a509",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:49:43.615Z",
+    "objectiveHash": "4448a509",
+    "id": "a8a206f244117f4c"
+  },
+  {
+    "stateKey": "*||||||0||0||4448a509",
+    "action": "fix_entity",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:49:43.616Z",
+    "objectiveHash": "4448a509",
+    "id": "724eea7d302792d2"
+  },
+  {
+    "stateKey": "*||||||0||0||4448a509",
+    "action": "add_agg",
+    "reward": -20,
+    "nextStateKey": "SUM(amount)||||SUM(AMOUNT)||0||0||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:49:43.617Z",
+    "objectiveHash": "4448a509",
+    "id": "61a10ae507d9349c"
+  },
+  {
+    "stateKey": "SUM(amount)||||SUM(AMOUNT)||0||0||4448a509",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:49:43.712Z",
+    "objectiveHash": "4448a509",
+    "id": "7d6304ee634f6eae"
+  },
+  {
+    "stateKey": "*||||||0||0||4448a509",
+    "action": "add_order",
+    "reward": 10,
+    "nextStateKey": "*||||||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:49:43.712Z",
+    "objectiveHash": "4448a509",
+    "id": "ac007344336e4967"
+  },
+  {
+    "stateKey": "*||||||0||1||4448a509",
+    "action": "add_agg",
+    "reward": 10,
+    "nextStateKey": "SUM(amount)||||SUM(AMOUNT)||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:49:43.713Z",
+    "objectiveHash": "4448a509",
+    "id": "a5075a4581709fc7"
+  },
+  {
+    "stateKey": "SUM(amount)||||SUM(AMOUNT)||0||1||4448a509",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:49:43.928Z",
+    "objectiveHash": "4448a509",
+    "id": "e10053a35ed15d0d"
+  },
+  {
+    "stateKey": "*||||||0||0||4448a509",
+    "action": "add_order",
+    "reward": 10,
+    "nextStateKey": "*||||||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:49:43.929Z",
+    "objectiveHash": "4448a509",
+    "id": "380aac0fc03c23f0"
+  },
+  {
+    "stateKey": "*||||||0||0||4448a509",
+    "action": "add_order",
+    "reward": 10,
+    "nextStateKey": "*||||||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:50:08.218Z",
+    "objectiveHash": "4448a509",
+    "id": "3300de56d911515b"
+  },
+  {
+    "stateKey": "*||||||0||1||4448a509",
+    "action": "add_agg",
+    "reward": 10,
+    "nextStateKey": "SUM(amount)||||SUM(AMOUNT)||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:50:08.219Z",
+    "objectiveHash": "4448a509",
+    "id": "9d9010769e9f8837"
+  },
+  {
+    "stateKey": "SUM(amount)||||SUM(AMOUNT)||0||1||4448a509",
+    "action": "add_column",
+    "reward": 10,
+    "nextStateKey": "SUM(amount),amount||||SUM(AMOUNT)||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:50:08.220Z",
+    "objectiveHash": "4448a509",
+    "id": "7e81d7959221dc63"
+  },
+  {
+    "stateKey": "SUM(amount),amount||||SUM(AMOUNT)||0||1||4448a509",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:50:08.318Z",
+    "objectiveHash": "4448a509",
+    "id": "e33ee2e6c964e8b0"
+  },
+  {
+    "stateKey": "*||||||0||0||4448a509",
+    "action": "add_order",
+    "reward": 10,
+    "nextStateKey": "*||||||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:50:08.319Z",
+    "objectiveHash": "4448a509",
+    "id": "a75ee196ad09c479"
+  },
+  {
+    "stateKey": "*||||||0||1||4448a509",
+    "action": "add_agg",
+    "reward": 10,
+    "nextStateKey": "SUM(amount)||||SUM(AMOUNT)||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:50:08.319Z",
+    "objectiveHash": "4448a509",
+    "id": "cb5937a41fff2baf"
+  },
+  {
+    "stateKey": "SUM(amount)||||SUM(AMOUNT)||0||1||4448a509",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:50:08.418Z",
+    "objectiveHash": "4448a509",
+    "id": "7ddb765878cbf438"
+  },
+  {
+    "stateKey": "*||||||0||0||4448a509",
+    "action": "add_order",
+    "reward": 10,
+    "nextStateKey": "*||||||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:50:08.419Z",
+    "objectiveHash": "4448a509",
+    "id": "e0039f9a38f04659"
+  },
+  {
+    "stateKey": "*||||||0||1||4448a509",
+    "action": "add_agg",
+    "reward": 10,
+    "nextStateKey": "SUM(amount)||||SUM(AMOUNT)||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:50:08.420Z",
+    "objectiveHash": "4448a509",
+    "id": "c515d23e18afe3ef"
+  },
+  {
+    "stateKey": "SUM(amount)||||SUM(AMOUNT)||0||1||4448a509",
+    "action": "add_column",
+    "reward": 10,
+    "nextStateKey": "SUM(amount),amount||||SUM(AMOUNT)||0||1||4448a509",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:50:08.420Z",
+    "objectiveHash": "4448a509",
+    "id": "7fd4fb5816180822"
+  },
+  {
+    "stateKey": "*||||||0||0||36a4f642",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||36a4f642",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:56:02.303Z",
+    "objectiveHash": "36a4f642",
+    "id": "cbbd16619b223be6"
+  },
+  {
+    "stateKey": "*||||||0||0||36a4f642",
+    "action": "add_where",
+    "reward": -10,
+    "nextStateKey": "*||amount > 0;||||0||0||36a4f642",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:56:02.308Z",
+    "objectiveHash": "36a4f642",
+    "id": "888e4911ca910596"
+  },
+  {
+    "stateKey": "*||amount > 0;||||0||0||36a4f642",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||36a4f642",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:56:02.538Z",
+    "objectiveHash": "36a4f642",
+    "id": "9d0844dba6fb58fd"
+  },
+  {
+    "stateKey": "*||||||0||0||36a4f642",
+    "action": "add_agg",
+    "reward": -20,
+    "nextStateKey": "SUM(amount)||||SUM(AMOUNT)||0||0||36a4f642",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:56:02.548Z",
+    "objectiveHash": "36a4f642",
+    "id": "cb735b5132a63c9d"
+  },
+  {
+    "stateKey": "SUM(amount)||||SUM(AMOUNT)||0||0||36a4f642",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||36a4f642",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:56:02.682Z",
+    "objectiveHash": "36a4f642",
+    "id": "60b0536de92dd009"
+  },
+  {
+    "stateKey": "*||||||0||0||36a4f642",
+    "action": "fix_entity",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||36a4f642",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:56:02.687Z",
+    "objectiveHash": "36a4f642",
+    "id": "7be657b3e7fc5d11"
+  },
+  {
+    "stateKey": "*||||||0||0||36a4f642",
+    "action": "add_order",
+    "reward": 10,
+    "nextStateKey": "*||||||0||1||36a4f642",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:56:02.690Z",
+    "objectiveHash": "36a4f642",
+    "id": "ad375d50f650fb95"
+  },
+  {
+    "stateKey": "*||||||0||1||36a4f642",
+    "action": "add_agg",
+    "reward": 10,
+    "nextStateKey": "SUM(amount)||||SUM(AMOUNT)||0||1||36a4f642",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:56:02.694Z",
+    "objectiveHash": "36a4f642",
+    "id": "1b3893d93411f1fe"
+  },
+  {
+    "stateKey": "SUM(amount)||||SUM(AMOUNT)||0||1||36a4f642",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||36a4f642",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:56:02.794Z",
+    "objectiveHash": "36a4f642",
+    "id": "9d2c19ad16b391ee"
+  },
+  {
+    "stateKey": "*||||||0||0||36a4f642",
+    "action": "add_order",
+    "reward": 10,
+    "nextStateKey": "*||||||0||1||36a4f642",
+    "terminal": false,
+    "timestamp": "2025-12-18T03:56:02.798Z",
+    "objectiveHash": "36a4f642",
+    "id": "2153490dc5dc2544"
+  },
+  {
+    "stateKey": "*||||||0||0||b6cff1e3",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:01:11.688Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "998b118d3e92ff3a"
+  },
+  {
+    "stateKey": "*||||||0||0||b6cff1e3",
+    "action": "add_where",
+    "reward": -10,
+    "nextStateKey": "*||amount > 0;||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:01:11.695Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "4550278c66a7e25b"
+  },
+  {
+    "stateKey": "*||amount > 0;||||0||0||b6cff1e3",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:01:11.790Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "b9f0fe12a020d748"
+  },
+  {
+    "stateKey": "*||||||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:01:11.794Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "7fdb84a5ba3ee9af"
+  },
+  {
+    "stateKey": "*||||||0||0||b6cff1e3",
+    "action": "add_agg",
+    "reward": -20,
+    "nextStateKey": "SUM(amount)||||SUM(AMOUNT)||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:01:11.802Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "ec66a8859cd282e9"
+  },
+  {
+    "stateKey": "SUM(amount)||||SUM(AMOUNT)||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": -20,
+    "nextStateKey": "SUM(amount)||||SUM(AMOUNT)||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:01:11.808Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "7803895f436d2f1a"
+  },
+  {
+    "stateKey": "SUM(amount)||||SUM(AMOUNT)||0||0||b6cff1e3",
+    "action": "add_where",
+    "reward": -10,
+    "nextStateKey": "SUM(amount)||amount > 0;||SUM(AMOUNT)||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:01:11.815Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "0f075991298de234"
+  },
+  {
+    "stateKey": "SUM(amount)||amount > 0;||SUM(AMOUNT)||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": -10,
+    "nextStateKey": "SUM(amount)||amount > 0;||SUM(AMOUNT)||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:01:11.821Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "03848231095e591d"
+  },
+  {
+    "stateKey": "SUM(amount)||amount > 0;||SUM(AMOUNT)||0||0||b6cff1e3",
+    "action": "llm_policy",
+    "reward": -20,
+    "nextStateKey": "*||||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:01:11.930Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "26ef112149420e58"
+  },
+  {
+    "stateKey": "*||||||0||0||b6cff1e3",
+    "action": "add_order",
+    "reward": 10,
+    "nextStateKey": "*||||||0||1||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:01:11.933Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "e877e57c74666d00"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "action": "add_agg",
+    "reward": 40,
+    "nextStateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||d887c289",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:21.883Z",
+    "objectiveHash": "d887c289",
+    "id": "23a5dfd7d168413d"
+  },
+  {
+    "stateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||d887c289",
+    "action": "llm_policy",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:22.119Z",
+    "objectiveHash": "d887c289",
+    "id": "ea205b75ec0a49c5"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "action": "add_agg",
+    "reward": 40,
+    "nextStateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||d887c289",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:22.122Z",
+    "objectiveHash": "d887c289",
+    "id": "e73f5dff6d4d0a1b"
+  },
+  {
+    "stateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||d887c289",
+    "action": "llm_policy",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:22.210Z",
+    "objectiveHash": "d887c289",
+    "id": "0c80154e02952d31"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "action": "fix_entity",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:22.215Z",
+    "objectiveHash": "d887c289",
+    "id": "a88e7357a7431162"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "action": "add_agg",
+    "reward": 40,
+    "nextStateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||d887c289",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:22.219Z",
+    "objectiveHash": "d887c289",
+    "id": "5ba56ffeda036735"
+  },
+  {
+    "stateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||d887c289",
+    "action": "llm_policy",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:23.182Z",
+    "objectiveHash": "d887c289",
+    "id": "d8ccc835b2960fb7"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "action": "add_agg",
+    "reward": 40,
+    "nextStateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||d887c289",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:23.185Z",
+    "objectiveHash": "d887c289",
+    "id": "704051843d46b73b"
+  },
+  {
+    "stateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||d887c289",
+    "action": "llm_policy",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:23.281Z",
+    "objectiveHash": "d887c289",
+    "id": "9fddf74ca6a4c2fb"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289",
+    "action": "add_agg",
+    "reward": 40,
+    "nextStateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||d887c289",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:23.286Z",
+    "objectiveHash": "d887c289",
+    "id": "03e9dc5f53aecbc1"
+  },
+  {
+    "stateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "action": "llm_policy",
+    "reward": 80,
+    "nextStateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:55.320Z",
+    "objectiveHash": "df1a0669",
+    "id": "703502209382c4f1"
+  },
+  {
+    "stateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "action": "llm_policy",
+    "reward": 80,
+    "nextStateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:55.415Z",
+    "objectiveHash": "df1a0669",
+    "id": "15c614da350d246a"
+  },
+  {
+    "stateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "action": "llm_policy",
+    "reward": 80,
+    "nextStateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:55.500Z",
+    "objectiveHash": "df1a0669",
+    "id": "870de16e9f9a04da"
+  },
+  {
+    "stateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "action": "llm_policy",
+    "reward": 80,
+    "nextStateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:55.581Z",
+    "objectiveHash": "df1a0669",
+    "id": "8c80249b57c3964d"
+  },
+  {
+    "stateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "action": "llm_policy",
+    "reward": 80,
+    "nextStateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:55.666Z",
+    "objectiveHash": "df1a0669",
+    "id": "92add3648d3711d9"
+  },
+  {
+    "stateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "action": "add_column",
+    "reward": 80,
+    "nextStateKey": "amount,e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:55.675Z",
+    "objectiveHash": "df1a0669",
+    "id": "5bd9d4a213bb21da"
+  },
+  {
+    "stateKey": "amount,e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "action": "llm_policy",
+    "reward": 80,
+    "nextStateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:55.933Z",
+    "objectiveHash": "df1a0669",
+    "id": "e2e8998eb22e00c6"
+  },
+  {
+    "stateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "action": "add_agg",
+    "reward": 65,
+    "nextStateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||df1a0669",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:55.936Z",
+    "objectiveHash": "df1a0669",
+    "id": "4c88220e1a617a49"
+  },
+  {
+    "stateKey": "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||df1a0669",
+    "action": "llm_policy",
+    "reward": 80,
+    "nextStateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:56.015Z",
+    "objectiveHash": "df1a0669",
+    "id": "0d3e850ffd2205df"
+  },
+  {
+    "stateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "action": "llm_policy",
+    "reward": 80,
+    "nextStateKey": "e.name||d.name = 'Engineering'||||0||0||df1a0669",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:06:56.111Z",
+    "objectiveHash": "df1a0669",
+    "id": "ea849ac4a617479c"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:08:29.664Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "5717e6700d566560"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:08:29.670Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "9762b4b4ac67620c"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:08:29.673Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "0447cac6b3c73ffd"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:08:29.678Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "31229e120c2a5986"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:08:29.683Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "537a1816d69be5b1"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:08:29.686Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "b2b71415f96f6280"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "action": "add_column",
+    "reward": 75,
+    "nextStateKey": "amount,c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:08:29.689Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "566a5797fcebd6b8"
+  },
+  {
+    "stateKey": "amount,c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "action": "llm_policy",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:08:29.783Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "ef37b870c4bc5284"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:08:29.786Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "3d2eb99361a2c18a"
+  },
+  {
+    "stateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "action": "fix_entity",
+    "reward": 75,
+    "nextStateKey": "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3",
+    "terminal": false,
+    "timestamp": "2025-12-18T04:08:29.789Z",
+    "objectiveHash": "b6cff1e3",
+    "id": "02d4e3d2ffecba21"
   }
 ]

@@ -1,5 +1,50 @@
 [
   {
+    "naturalText": "Give me all details of the employees working in engineering department like the salary, name and dept name",
+    "createdAt": "2025-12-18T04:08:20.741Z",
+    "id": "u-1766030900741"
+  },
+  {
+    "naturalText": "give me names of all the employees in the engineering department",
+    "createdAt": "2025-12-18T04:06:47.363Z",
+    "id": "u-1766030807363"
+  },
+  {
+    "naturalText": "give me all details of the people working in engineering dept including their saalries, names and dept name",
+    "createdAt": "2025-12-18T04:06:10.069Z",
+    "id": "u-1766030770069"
+  },
+  {
+    "naturalText": "Give me all details of the employees working in engineering department like the salary, name and dept name",
+    "createdAt": "2025-12-18T04:01:03.647Z",
+    "id": "u-1766030463647"
+  },
+  {
+    "naturalText": "Give me all details of employees working in the engineering department",
+    "createdAt": "2025-12-18T03:55:56.257Z",
+    "id": "u-1766030156257"
+  },
+  {
+    "naturalText": "Give me details of all people working in the engineering department",
+    "createdAt": "2025-12-18T03:50:02.362Z",
+    "id": "u-1766029802362"
+  },
+  {
+    "naturalText": "Tell me the details of all people working in engineering department",
+    "createdAt": "2025-12-18T03:49:31.732Z",
+    "id": "u-1766029771732"
+  },
+  {
+    "naturalText": "Give me who all spent on starbucks",
+    "createdAt": "2025-12-18T03:28:52.280Z",
+    "id": "u-1766028532280"
+  },
+  {
+    "naturalText": "Give me details of starbucks",
+    "createdAt": "2025-12-18T03:02:10.318Z",
+    "id": "u-1766026930318"
+  },
+  {
     "naturalText": "give me all expenses sum",
     "createdAt": "2025-12-17T01:48:09.974Z",
     "id": "u-1765936089974"

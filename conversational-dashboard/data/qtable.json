@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updatedAt": "2025-12-17T01:48:16.529Z",
+  "updatedAt": "2025-12-18T04:08:29.792Z",
   "hyperparams": {
     "alpha": 0.1,
     "gamma": 0.9,
-    "epsilon": 0.1525725328281993,
+    "epsilon": 0.14584249407409236,
     "epsilonDecay": 0.995,
     "epsilonMin": 0.05,
     "maxQTableSize": 10000,
@@ -151,6 +151,97 @@
     },
     "SUM(amount),amount||amount > 0;||SUM(AMOUNT)||0||0||04c34904": {
       "llm_policy": -0.050000000000000044
+    },
+    "*||merchant_name = 'Starbucks'||||0||0||a1bce4a5": {
+      "llm_policy": 11.995000000000001
+    },
+    "*||merchant_name = 'Starbucks'||||0||0||c2f7126b": {
+      "llm_policy": 11.995000000000001
+    },
+    "*||||||0||0||4448a509": {
+      "llm_policy": -1.5050000000000003,
+      "add_where": -0.9550000000000001,
+      "fix_entity": -2,
+      "add_agg": -1.955,
+      "add_order": 4.6737284500000005
+    },
+    "*||amount > 0;||||0||0||4448a509": {
+      "llm_policy": -1.5500000000000003
+    },
+    "SUM(amount)||||SUM(AMOUNT)||0||0||4448a509": {
+      "llm_policy": -1.5500000000000003
+    },
+    "*||||||0||1||4448a509": {
+      "add_agg": 3.4718050000000003
+    },
+    "SUM(amount)||||SUM(AMOUNT)||0||1||4448a509": {
+      "llm_policy": -3.3950000000000005,
+      "add_column": 1.9405000000000001
+    },
+    "SUM(amount),amount||||SUM(AMOUNT)||0||1||4448a509": {
+      "llm_policy": -1.5500000000000003
+    },
+    "*||||||0||0||36a4f642": {
+      "llm_policy": -1.5050000000000003,
+      "add_where": -0.9550000000000001,
+      "add_agg": -1.955,
+      "fix_entity": -2,
+      "add_order": 2.03455
+    },
+    "*||amount > 0;||||0||0||36a4f642": {
+      "llm_policy": -1.5500000000000003
+    },
+    "SUM(amount)||||SUM(AMOUNT)||0||0||36a4f642": {
+      "llm_policy": -1.5500000000000003
+    },
+    "*||||||0||1||36a4f642": {
+      "add_agg": 1.045
+    },
+    "SUM(amount)||||SUM(AMOUNT)||0||1||36a4f642": {
+      "llm_policy": -1.5500000000000003
+    },
+    "*||||||0||0||b6cff1e3": {
+      "llm_policy": -1.5050000000000003,
+      "add_where": -0.9550000000000001,
+      "fix_entity": -2,
+      "add_agg": -1.955,
+      "add_order": 1.045
+    },
+    "*||amount > 0;||||0||0||b6cff1e3": {
+      "llm_policy": -1.5500000000000003
+    },
+    "SUM(amount)||||SUM(AMOUNT)||0||0||b6cff1e3": {
+      "fix_entity": -1.955,
+      "add_where": -0.9550000000000001
+    },
+    "SUM(amount)||amount > 0;||SUM(AMOUNT)||0||0||b6cff1e3": {
+      "fix_entity": -0.9550000000000001,
+      "llm_policy": -1.5500000000000003
+    },
+    "c.salary,e.name||d.name = 'Engineering'||||0||0||d887c289": {
+      "add_agg": 22.23538833406,
+      "fix_entity": 8.2524045
+    },
+    "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||d887c289": {
+      "llm_policy": 27.6009661695
+    },
+    "e.name||d.name = 'Engineering'||||0||0||df1a0669": {
+      "llm_policy": 47.286620553900505,
+      "add_column": 8.045,
+      "add_agg": 6.545000000000001
+    },
+    "amount,e.name||d.name = 'Engineering'||||0||0||df1a0669": {
+      "llm_policy": 12.021510959445502
+    },
+    "SUM(amount)||d.name = 'Engineering'||SUM(AMOUNT)||0||0||df1a0669": {
+      "llm_policy": 12.021510959445502
+    },
+    "c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3": {
+      "fix_entity": 57.983422119715755,
+      "add_column": 7.545000000000001
+    },
+    "amount,c.salary,e.name||d.name = 'Engineering'||||0||0||b6cff1e3": {
+      "llm_policy": 11.903941425134597
     }
   }
 }

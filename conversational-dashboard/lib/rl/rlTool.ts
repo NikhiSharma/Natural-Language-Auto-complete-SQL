@@ -23,9 +23,9 @@ export type Feedback = {
 };
 
 const ENTITY_COLUMN_MAP: Record<string, string> = {
-  merchant: "merchant_name",
-  merchants: "merchant_name",
-  category: "category",
+  department: "d.name",
+  employee: "e.name",
+  user: "e.name",
 };
 
 export async function rlTool(
@@ -79,14 +79,24 @@ async function getSchema(): Promise<Schema> {
   return {
     tables: [
       {
-        name: "transactions",
-        columns: [
-          "id",
-          "merchant_name",
-          "amount",
-          "category",
-          "created_at",
-        ],
+        name: "employees",
+        columns: ["employee_id", "name", "city", "department_id"],
+      },
+      {
+        name: "departments",
+        columns: ["department_id", "name", "location"],
+      },
+      {
+        name: "compensation",
+        columns: ["employee_id", "salary", "reports_to"],
+      },
+      {
+        name: "teams",
+        columns: ["team_id", "team_name", "department_id"],
+      },
+      {
+        name: "employee_teams",
+        columns: ["employee_id", "team_id"],
       },
     ],
   };
@@ -281,36 +291,41 @@ export function evaluateSQL(
  //  FALLBACK (SAFE, SYMBOLIC)
 
 function heuristicFallback(objective: any): string {
-  // Check if we have filters array (mixed entity types)
-  const filters = objective?.scope?.filters;
-  if (filters && Array.isArray(filters) && filters.length > 0) {
-    const conditions = filters.map((filter: any) => {
-      const field = filter.field;
-      const value = filter.value;
-
-      if (Array.isArray(value)) {
-        const values = value.map(v => `'${v}'`).join(", ");
-        return `${field} IN (${values})`;
-      }
-      return `${field} = '${value}'`;
-    });
-
-    return `SELECT * FROM transactions WHERE ${conditions.join(" OR ")}`;
-  }
-
-  // Original single entity logic
+  const dataSource = objective?.constraints?.dataSource || "employees";
+  const mustInclude = objective?.constraints?.mustInclude || [];
   const entity = objective?.scope?.entity;
-  const column = ENTITY_COLUMN_MAP[entity?.type];
-  const id = entity?.identifier;
+  const identifier = entity?.identifier;
 
-  if (!column || !id) {
-    return `SELECT * FROM transactions;`;
+  // Determine which tables to join based on dataSource
+  if (dataSource === "employees_with_compensation" || mustInclude.includes("salary")) {
+    // Need employees, departments, and compensation
+    const selectCols = mustInclude.length > 0
+      ? mustInclude.map((col: string) => col === "name" ? "e.name" : col === "salary" ? "c.salary" : `d.${col}`).join(", ")
+      : "e.name, d.name AS department, c.salary";
+
+    let sql = `SELECT ${selectCols} FROM employees e JOIN departments d ON e.department_id = d.department_id JOIN compensation c ON e.employee_id = c.employee_id`;
+
+    if (identifier && entity?.type === "department") {
+      sql += ` WHERE d.name = '${identifier}'`;
+    }
+
+    return sql;
   }
 
-  if (Array.isArray(id)) {
-    const values = id.map(v => `'${v}'`).join(", ");
-    return `SELECT * FROM transactions WHERE ${column} IN (${values})`;
+  if (dataSource === "employees_with_departments") {
+    const selectCols = mustInclude.length > 0
+      ? mustInclude.map((col: string) => col === "name" ? "e.name" : `d.${col}`).join(", ")
+      : "e.name, d.name AS department";
+
+    let sql = `SELECT ${selectCols} FROM employees e JOIN departments d ON e.department_id = d.department_id`;
+
+    if (identifier && entity?.type === "department") {
+      sql += ` WHERE d.name = '${identifier}'`;
+    }
+
+    return sql;
   }
 
-  return `SELECT * FROM transactions WHERE ${column} = '${id}'`;
+  // Default: just employees
+  return `SELECT * FROM employees`;
 }
