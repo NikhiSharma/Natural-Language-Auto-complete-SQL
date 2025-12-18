@@ -3438,5 +3438,605 @@
     "timestamp": "2025-12-18T19:29:33.684Z",
     "objectiveHash": "4691d6d6",
     "id": "689f945b0e9d896f"
+  },
+  {
+    "stateKey": "||||||1||1||5da16114",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||5da16114",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:45:36.634Z",
+    "objectiveHash": "5da16114",
+    "id": "42c017c55333a978"
+  },
+  {
+    "stateKey": "||||||1||1||5da16114",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||5da16114",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:45:39.189Z",
+    "objectiveHash": "5da16114",
+    "id": "eb0682ddbc8b8e46"
+  },
+  {
+    "stateKey": "||||||1||1||5da16114",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||5da16114",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:45:41.627Z",
+    "objectiveHash": "5da16114",
+    "id": "3e5a8489a3c50104"
+  },
+  {
+    "stateKey": "||||||1||1||5da16114",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||5da16114",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:45:43.588Z",
+    "objectiveHash": "5da16114",
+    "id": "2e44263e15cf84a0"
+  },
+  {
+    "stateKey": "||||||1||1||5da16114",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||5da16114",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:45:45.987Z",
+    "objectiveHash": "5da16114",
+    "id": "66a4e3d6800baa00"
+  },
+  {
+    "stateKey": "||||||1||1||5da16114",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||5da16114",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:45:47.922Z",
+    "objectiveHash": "5da16114",
+    "id": "d36fcc468542cba5"
+  },
+  {
+    "stateKey": "||||||1||1||5da16114",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||5da16114",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:45:49.798Z",
+    "objectiveHash": "5da16114",
+    "id": "76703ca55fe7ae66"
+  },
+  {
+    "stateKey": "||||||1||1||5da16114",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||5da16114",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:45:52.064Z",
+    "objectiveHash": "5da16114",
+    "id": "7aebba151ce3ec17"
+  },
+  {
+    "stateKey": "||||||1||1||5da16114",
+    "action": "fix_entity",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||5da16114",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:45:52.078Z",
+    "objectiveHash": "5da16114",
+    "id": "69cb41a0274e0202"
+  },
+  {
+    "stateKey": "||||||1||1||5da16114",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||5da16114",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:45:54.244Z",
+    "objectiveHash": "5da16114",
+    "id": "7d163c36f513abd2"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:51:07.099Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "90b49e8fa6fd9476"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:51:08.550Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "b1e8ca03618b2d7d"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:51:12.455Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "1d906a7459c1ff3b"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:51:13.937Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "8c467d39dbceeeb8"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "add_column",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:51:13.943Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "eb151084a529d9de"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:51:15.342Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "11717eeb0e877f41"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:51:17.827Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "e9108c4e04b4a184"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:51:19.347Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "1822608e9eff7312"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "add_agg",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:51:19.351Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "e051ce6825c45eed"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:51:21.270Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "0259a69684e3db03"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:52:19.484Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "6b297038a1aacfd4"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:52:20.996Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "9e768f603e4bb3fb"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:52:23.109Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "890547d06f1b7d96"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:52:25.381Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "4f679bf34c104423"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:52:31.953Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "fccc7d553a57a545"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:52:35.383Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "b79b21f1097e03f4"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:52:37.306Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "56606f5af7136331"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "add_where",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:52:37.322Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "141a70343c45cfe8"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:52:41.333Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "a0f62de3356b7792"
+  },
+  {
+    "stateKey": "||||||1||1||f3e9d8e6",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||f3e9d8e6",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:52:43.670Z",
+    "objectiveHash": "f3e9d8e6",
+    "id": "56cd0cbce43343d5"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 50,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:53:35.814Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "d62c3c34112be4ca"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 50,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:53:37.532Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "b561648a43f77fdb"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 50,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:53:38.461Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "aaf8e79602f6e8e5"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:53:39.705Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "2e995f54027c48d4"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:53:41.045Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "dc69f180b3a518db"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:53:42.276Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "f0c9adbb4990c9ac"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:53:43.495Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "d5e19a3258a2759e"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:53:44.661Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "5b6c41eba97e84b2"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:53:45.989Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "874d2fba2d1b87e1"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:53:47.834Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "48781ccf7db74604"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 50,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:54:06.568Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "2b958d22077d6164"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 50,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:54:07.494Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "739cfb62f02d464c"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:54:08.933Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "c8e5820df163b536"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:54:10.140Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "75ab31b5dd86e39e"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:54:11.210Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "d0f85151ecdd32f1"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "fix_entity",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:54:11.228Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "6016cd4bc41c5b25"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 50,
+    "nextStateKey": "1||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:54:12.281Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "93faf9b6095d01b2"
+  },
+  {
+    "stateKey": "1||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:54:13.591Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "8fd16121206962bd"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:54:14.699Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "88a2801034115a65"
+  },
+  {
+    "stateKey": "||||||0||1||bdf0cd79",
+    "action": "llm_policy",
+    "reward": 45,
+    "nextStateKey": "||||||0||1||bdf0cd79",
+    "terminal": false,
+    "timestamp": "2025-12-18T19:54:16.842Z",
+    "objectiveHash": "bdf0cd79",
+    "id": "06bf360ebc8eb4ef"
+  },
+  {
+    "stateKey": "||||||1||1||fb57d6ef",
+    "action": "fix_entity",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||fb57d6ef",
+    "terminal": false,
+    "timestamp": "2025-12-18T20:04:33.961Z",
+    "objectiveHash": "fb57d6ef",
+    "id": "7fc56ebd63553e36"
+  },
+  {
+    "stateKey": "||||||1||1||fb57d6ef",
+    "action": "fix_entity",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||fb57d6ef",
+    "terminal": false,
+    "timestamp": "2025-12-18T20:04:33.977Z",
+    "objectiveHash": "fb57d6ef",
+    "id": "a1c76b30bb561877"
+  },
+  {
+    "stateKey": "||||||1||1||fb57d6ef",
+    "action": "fix_entity",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||fb57d6ef",
+    "terminal": false,
+    "timestamp": "2025-12-18T20:04:33.989Z",
+    "objectiveHash": "fb57d6ef",
+    "id": "07034c6bcf5e897d"
+  },
+  {
+    "stateKey": "||||||1||1||fb57d6ef",
+    "action": "fix_entity",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||fb57d6ef",
+    "terminal": false,
+    "timestamp": "2025-12-18T20:04:33.997Z",
+    "objectiveHash": "fb57d6ef",
+    "id": "746aceb7d7844fe5"
+  },
+  {
+    "stateKey": "||||||1||1||fb57d6ef",
+    "action": "fix_entity",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||fb57d6ef",
+    "terminal": false,
+    "timestamp": "2025-12-18T20:04:34.012Z",
+    "objectiveHash": "fb57d6ef",
+    "id": "7d5f4eeac2f81d38"
+  },
+  {
+    "stateKey": "||||||1||1||fb57d6ef",
+    "action": "fix_entity",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||fb57d6ef",
+    "terminal": false,
+    "timestamp": "2025-12-18T20:04:34.026Z",
+    "objectiveHash": "fb57d6ef",
+    "id": "d674a997e6d8048b"
+  },
+  {
+    "stateKey": "||||||1||1||fb57d6ef",
+    "action": "fix_entity",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||fb57d6ef",
+    "terminal": false,
+    "timestamp": "2025-12-18T20:04:34.038Z",
+    "objectiveHash": "fb57d6ef",
+    "id": "f094676231fdc31a"
+  },
+  {
+    "stateKey": "||||||1||1||fb57d6ef",
+    "action": "fix_entity",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||fb57d6ef",
+    "terminal": false,
+    "timestamp": "2025-12-18T20:04:34.047Z",
+    "objectiveHash": "fb57d6ef",
+    "id": "a16f098f4b746fef"
+  },
+  {
+    "stateKey": "||||||1||1||fb57d6ef",
+    "action": "llm_policy",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||fb57d6ef",
+    "terminal": false,
+    "timestamp": "2025-12-18T20:04:36.819Z",
+    "objectiveHash": "fb57d6ef",
+    "id": "3d794f3f610305da"
+  },
+  {
+    "stateKey": "||||||1||1||fb57d6ef",
+    "action": "fix_entity",
+    "reward": 140,
+    "nextStateKey": "||||||1||1||fb57d6ef",
+    "terminal": false,
+    "timestamp": "2025-12-18T20:04:36.841Z",
+    "objectiveHash": "fb57d6ef",
+    "id": "d8ad1230fd763eaf"
   }
 ]

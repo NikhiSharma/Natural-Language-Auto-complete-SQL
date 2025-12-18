@@ -85,8 +85,9 @@ export default function Home() {
     }
 
     try {
+      // Step 1: Generate objective function
       addDebugLog("Generating objective function...");
-      const res = await fetch("/api/objective/generate", {
+      const objRes = await fetch("/api/objective/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -95,26 +96,49 @@ export default function Home() {
         }),
       });
 
-      const data = await res.json();
+      const objData = await objRes.json();
       addDebugLog(`✓ Objective function generated`);
-      addDebugLog(`Entity: ${data.objective?.entity?.identifier || "N/A"}`);
+      addDebugLog(`Entity: ${objData.objective?.entity?.identifier || "N/A"}`);
 
-      setObjectiveAst(data.objective);
-      setObjectiveLocked(false); // Reset lock state for new objective
+      setObjectiveAst(objData.objective);
+      setObjectiveLocked(true); // Lock immediately since we're auto-generating
       setStage("objective");
 
       setConversation((prev) => [
         ...prev,
         {
           role: "assistant",
-          text: "Objective function generated. Review and approve it.",
+          text: "Objective function generated. Generating SQL query…",
         },
       ]);
-    } catch (err) {
-      addDebugLog("✗ Failed to generate objective function");
+
+      // Step 2: Auto-generate SQL immediately
+      addDebugLog("Auto-generating SQL...");
+      const sqlStartTime = Date.now();
+      const sqlRes = await fetch("/api/sql/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ objective: objData.objective }),
+      });
+
+      const sqlData = await sqlRes.json();
+      const sqlDuration = Date.now() - sqlStartTime;
+
+      addDebugLog(`✓ SQL generated (${sqlDuration}ms)`);
+      addDebugLog(`Generated SQL: ${sqlData.sql}`);
+
+      setSql(sqlData.sql);
+      setStage("sql");
+
       setConversation((prev) => [
         ...prev,
-        { role: "assistant", text: "Failed to generate objective function." },
+        { role: "assistant", text: "SQL query generated. You can run it, edit it, or optimize it with RL." },
+      ]);
+    } catch (err) {
+      addDebugLog("✗ Failed to generate objective/SQL");
+      setConversation((prev) => [
+        ...prev,
+        { role: "assistant", text: "Failed to generate objective function or SQL." },
       ]);
     }
 
@@ -134,7 +158,6 @@ export default function Home() {
     if (!objectiveAst) return;
 
     addDebugLog("Generating SQL...");
-    setObjectiveLocked(true);
     setStage("optimizing");
 
     setConversation((prev) => [

@@ -137,19 +137,29 @@ User: "all employees"
 `;
 
 export async function POST(req: Request) {
-  const { userInput } = await req.json();
+  const { userInput, currentObjective } = await req.json();
 
   // Fetch live schema
   const { schemaDescription, relationshipsDescription } = await getSchemaDescription();
   const systemPrompt = getSystemPrompt(schemaDescription, relationshipsDescription);
 
+  // Build messages with context
+  const messages: any[] = [{ role: "system", content: systemPrompt }];
+
+  // If there's a current objective, include it for context
+  if (currentObjective) {
+    messages.push({
+      role: "system",
+      content: `CURRENT OBJECTIVE (for modifications):\n${JSON.stringify(currentObjective, null, 2)}\n\nThe user is requesting a modification to this objective. Apply their changes while preserving the overall structure.`,
+    });
+  }
+
+  messages.push({ role: "user", content: userInput });
+
   const response = await openai.chat.completions.create({
     model: OBJECTIVE_MODEL,
     temperature: 0.2,
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: userInput },
-    ],
+    messages,
   });
 
   function extractJson(text: string) {
