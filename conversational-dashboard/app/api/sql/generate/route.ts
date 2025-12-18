@@ -62,11 +62,12 @@ PROCESS:
    - Index usage: Which columns are in foreign keys?
 
 3. **Reason about cost factors**:
+   - PREFER: CTEs (WITH clause) + ARRAY_AGG for complex aggregations (best pattern for modularity)
    - PREFER: Early filtering (WHERE before JOIN), reduced intermediate result sizes
    - PREFER: Aggregation (ARRAY_AGG + GROUP BY) over Cartesian products for one-to-many
-   - PREFER: Direct JOINs over subqueries when cardinality is low
+   - PREFER: Direct JOINs over correlated subqueries when cardinality is low
    - PREFER: LEFT JOIN for optional relationships to avoid losing base rows
-   - AVOID: Full table scans, unnecessary join fan-out, duplicate row elimination via DISTINCT
+   - AVOID: Full table scans, unnecessary join fan-out, duplicate row elimination via DISTINCT, correlated subqueries in WHERE
 
 4. **Select the single best query** based on expected execution efficiency
    - Minimize rows at each step

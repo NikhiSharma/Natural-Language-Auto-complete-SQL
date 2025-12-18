@@ -2950,5 +2950,131 @@
     "sqlQuery": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.name AS department_name,\n  d.location,\n  et.team_id,\n  t.team_name,\n  c.salary,\n  c.reports_to\nFROM employees e\nLEFT JOIN departments d\n  ON d.department_id = e.department_id\nLEFT JOIN compensation c\n  ON c.employee_id = e.employee_id\nLEFT JOIN LATERAL (\n  SELECT MIN(et1.team_id) AS team_id\n  FROM employee_teams et1\n  WHERE et1.employee_id = e.employee_id\n) et\n  ON TRUE\nLEFT JOIN teams t\n  ON t.team_id = et.team_id;",
     "rowCount": 20,
     "createdAt": "2025-12-18T21:05:56.420Z"
+  },
+  {
+    "naturalText": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    e.department_id,\n    d.name AS department_name,\n    d.location,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nJOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "sqlQuery": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    e.department_id,\n    d.name AS department_name,\n    d.location,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nJOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:06:52.063Z"
+  },
+  {
+    "naturalText": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    e.department_id,\n    d.name AS department_name,\n    d.location,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nJOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "sqlQuery": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    e.department_id,\n    d.name AS department_name,\n    d.location,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nJOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:06:54.133Z"
+  },
+  {
+    "naturalText": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.name AS department_name,\n  d.location,\n  c.salary,\n  c.reports_to\nFROM employees AS e\nLEFT JOIN departments AS d\n  ON d.department_id = e.department_id\nLEFT JOIN compensation AS c\n  ON c.employee_id = e.employee_id;",
+    "sqlQuery": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.name AS department_name,\n  d.location,\n  c.salary,\n  c.reports_to\nFROM employees AS e\nLEFT JOIN departments AS d\n  ON d.department_id = e.department_id\nLEFT JOIN compensation AS c\n  ON c.employee_id = e.employee_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:07:10.763Z"
+  },
+  {
+    "naturalText": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    e.department_id,\n    d.name AS department_name,\n    d.location\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id;",
+    "sqlQuery": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    e.department_id,\n    d.name AS department_name,\n    d.location\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:43:30.807Z"
+  },
+  {
+    "naturalText": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    e.department_id,\n    d.name AS department_name,\n    d.location\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id;",
+    "sqlQuery": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    e.department_id,\n    d.name AS department_name,\n    d.location\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:43:45.123Z"
+  },
+  {
+    "naturalText": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.name AS department_name,\n  d.location\nFROM employees AS e\nJOIN departments AS d\n  ON d.department_id = e.department_id;",
+    "sqlQuery": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.name AS department_name,\n  d.location\nFROM employees AS e\nJOIN departments AS d\n  ON d.department_id = e.department_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:44:04.468Z"
+  },
+  {
+    "naturalText": "SELECT d.department_id, d.name, d.location, c.salary\nFROM departments d\nJOIN compensation c ON c.employee_id IN (SELECT employee_id FROM employees WHERE department_id = d.department_id);",
+    "sqlQuery": "SELECT d.department_id, d.name, d.location, c.salary\nFROM departments d\nJOIN compensation c ON c.employee_id IN (SELECT employee_id FROM employees WHERE department_id = d.department_id);",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:45:21.789Z"
+  },
+  {
+    "naturalText": "SELECT\n  d.department_id,\n  d.name,\n  d.location,\n  AVG(c.salary) AS salary\nFROM departments AS d\nLEFT JOIN employees AS e\n  ON e.department_id = d.department_id\nLEFT JOIN compensation AS c\n  ON c.employee_id = e.employee_id\nGROUP BY\n  d.department_id,\n  d.name,\n  d.location;",
+    "sqlQuery": "SELECT\n  d.department_id,\n  d.name,\n  d.location,\n  AVG(c.salary) AS salary\nFROM departments AS d\nLEFT JOIN employees AS e\n  ON e.department_id = d.department_id\nLEFT JOIN compensation AS c\n  ON c.employee_id = e.employee_id\nGROUP BY\n  d.department_id,\n  d.name,\n  d.location;",
+    "rowCount": 7,
+    "createdAt": "2025-12-18T21:45:51.356Z"
+  },
+  {
+    "naturalText": "SELECT d.department_id, d.location, c.salary\nFROM departments d\nJOIN compensation c ON d.department_id = (SELECT e.department_id FROM employees e WHERE e.employee_id = c.employee_id)",
+    "sqlQuery": "SELECT d.department_id, d.location, c.salary\nFROM departments d\nJOIN compensation c ON d.department_id = (SELECT e.department_id FROM employees e WHERE e.employee_id = c.employee_id)",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:46:27.281Z"
+  },
+  {
+    "naturalText": "SELECT\n  d.department_id,\n  d.location,\n  c.salary\nFROM compensation c\nJOIN employees e\n  ON e.employee_id = c.employee_id\nJOIN departments d\n  ON d.department_id = e.department_id;",
+    "sqlQuery": "SELECT\n  d.department_id,\n  d.location,\n  c.salary\nFROM compensation c\nJOIN employees e\n  ON e.employee_id = c.employee_id\nJOIN departments d\n  ON d.department_id = e.department_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:46:40.349Z"
+  },
+  {
+    "naturalText": "SELECT\n  d.department_id,\n  d.location,\n  c.salary\nFROM compensation c\nJOIN employees e\n  ON e.employee_id = c.employee_id\nJOIN departments d\n  ON d.department_id = e.department_id;",
+    "sqlQuery": "SELECT\n  d.department_id,\n  d.location,\n  c.salary\nFROM compensation c\nJOIN employees e\n  ON e.employee_id = c.employee_id\nJOIN departments d\n  ON d.department_id = e.department_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:46:45.718Z"
+  },
+  {
+    "naturalText": "SELECT \n    d.department_id,\n    d.location,\n    c.salary,\n    d.name\nFROM \n    departments d\nJOIN \n    compensation c ON d.department_id = (SELECT department_id FROM employees WHERE employees.employee_id = c.employee_id LIMIT 1);",
+    "sqlQuery": "SELECT \n    d.department_id,\n    d.location,\n    c.salary,\n    d.name\nFROM \n    departments d\nJOIN \n    compensation c ON d.department_id = (SELECT department_id FROM employees WHERE employees.employee_id = c.employee_id LIMIT 1);",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:47:14.945Z"
+  },
+  {
+    "naturalText": "SELECT\n  d.department_id,\n  d.location,\n  c.salary,\n  d.name\nFROM compensation AS c\nJOIN employees AS e\n  ON e.employee_id = c.employee_id\nJOIN departments AS d\n  ON d.department_id = e.department_id;",
+    "sqlQuery": "SELECT\n  d.department_id,\n  d.location,\n  c.salary,\n  d.name\nFROM compensation AS c\nJOIN employees AS e\n  ON e.employee_id = c.employee_id\nJOIN departments AS d\n  ON d.department_id = e.department_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:47:31.029Z"
+  },
+  {
+    "naturalText": "SELECT\n  d.department_id,\n  d.location,\n  c.salary,\n  d.name\nFROM compensation AS c\nJOIN employees AS e\n  ON e.employee_id = c.employee_id\nJOIN departments AS d\n  ON d.department_id = e.department_id;",
+    "sqlQuery": "SELECT\n  d.department_id,\n  d.location,\n  c.salary,\n  d.name\nFROM compensation AS c\nJOIN employees AS e\n  ON e.employee_id = c.employee_id\nJOIN departments AS d\n  ON d.department_id = e.department_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:47:32.675Z"
+  },
+  {
+    "naturalText": "SELECT \n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    e.employee_id,\n    et.team_id,\n    t.team_name\nFROM \n    departments d\nJOIN \n    employees e ON d.department_id = e.department_id\nJOIN \n    employee_teams et ON e.employee_id = et.employee_id\nJOIN \n    teams t ON et.team_id = t.team_id\nORDER BY \n    d.department_id, e.employee_id;",
+    "sqlQuery": "SELECT \n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    e.employee_id,\n    et.team_id,\n    t.team_name\nFROM \n    departments d\nJOIN \n    employees e ON d.department_id = e.department_id\nJOIN \n    employee_teams et ON e.employee_id = et.employee_id\nJOIN \n    teams t ON et.team_id = t.team_id\nORDER BY \n    d.department_id, e.employee_id;",
+    "rowCount": 21,
+    "createdAt": "2025-12-18T21:48:32.222Z"
+  },
+  {
+    "naturalText": "SELECT\n  d.department_id,\n  d.name,\n  d.location,\n  et.employee_id,\n  t.team_id,\n  t.team_name\nFROM departments AS d\nLEFT JOIN teams AS t\n  ON t.department_id = d.department_id\nLEFT JOIN employee_teams AS et\n  ON et.team_id = t.team_id\nORDER BY d.department_id, t.team_id, et.employee_id;",
+    "sqlQuery": "SELECT\n  d.department_id,\n  d.name,\n  d.location,\n  et.employee_id,\n  t.team_id,\n  t.team_name\nFROM departments AS d\nLEFT JOIN teams AS t\n  ON t.department_id = d.department_id\nLEFT JOIN employee_teams AS et\n  ON et.team_id = t.team_id\nORDER BY d.department_id, t.team_id, et.employee_id;",
+    "rowCount": 21,
+    "createdAt": "2025-12-18T21:48:59.289Z"
+  },
+  {
+    "naturalText": "WITH employee_team_agg AS (\n  SELECT\n    et.employee_id,\n    ARRAY_AGG(t.team_name ORDER BY t.team_name) AS teams\n  FROM employee_teams et\n  JOIN teams t ON t.team_id = et.team_id\n  GROUP BY et.employee_id\n)\nSELECT\n  d.department_id,\n  d.name AS department_name,\n  d.location,\n  e.employee_id,\n  eta.teams\nFROM employees e\nJOIN departments d ON d.department_id = e.department_id\nLEFT JOIN employee_team_agg eta ON eta.employee_id = e.employee_id\nORDER BY d.department_id, e.employee_id;\n",
+    "sqlQuery": "WITH employee_team_agg AS (\n  SELECT\n    et.employee_id,\n    ARRAY_AGG(t.team_name ORDER BY t.team_name) AS teams\n  FROM employee_teams et\n  JOIN teams t ON t.team_id = et.team_id\n  GROUP BY et.employee_id\n)\nSELECT\n  d.department_id,\n  d.name AS department_name,\n  d.location,\n  e.employee_id,\n  eta.teams\nFROM employees e\nJOIN departments d ON d.department_id = e.department_id\nLEFT JOIN employee_team_agg eta ON eta.employee_id = e.employee_id\nORDER BY d.department_id, e.employee_id;\n",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:52:50.884Z"
+  },
+  {
+    "naturalText": "SELECT \n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    e.employee_id,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to,\n    e.city\nFROM \n    departments d\nJOIN \n    teams t ON d.department_id = t.department_id\nJOIN \n    employee_teams et ON t.team_id = et.team_id\nJOIN \n    employees e ON et.employee_id = e.employee_id\nLEFT JOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "sqlQuery": "SELECT \n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    e.employee_id,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to,\n    e.city\nFROM \n    departments d\nJOIN \n    teams t ON d.department_id = t.department_id\nJOIN \n    employee_teams et ON t.team_id = et.team_id\nJOIN \n    employees e ON et.employee_id = e.employee_id\nLEFT JOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "rowCount": 21,
+    "createdAt": "2025-12-18T21:57:11.229Z"
+  },
+  {
+    "naturalText": "WITH emp_team AS (\n  SELECT\n    et.employee_id,\n    ARRAY_AGG(et.team_id ORDER BY et.team_id) AS team_ids\n  FROM employee_teams et\n  GROUP BY et.employee_id\n),\nemp_team_name AS (\n  SELECT\n    et.employee_id,\n    ARRAY_AGG(t.team_name ORDER BY t.team_name) AS team_names\n  FROM employee_teams et\n  JOIN teams t\n    ON t.team_id = et.team_id\n  GROUP BY et.employee_id\n)\nSELECT\n  d.department_id,\n  d.name,\n  d.location,\n  e.employee_id,\n  et.team_ids AS team_id,\n  etn.team_names AS team_name,\n  c.salary,\n  c.reports_to,\n  e.city\nFROM departments d\nLEFT JOIN employees e\n  ON e.department_id = d.department_id\nLEFT JOIN emp_team et\n  ON et.employee_id = e.employee_id\nLEFT JOIN emp_team_name etn\n  ON etn.employee_id = e.employee_id\nLEFT JOIN compensation c\n  ON c.employee_id = e.employee_id;",
+    "sqlQuery": "WITH emp_team AS (\n  SELECT\n    et.employee_id,\n    ARRAY_AGG(et.team_id ORDER BY et.team_id) AS team_ids\n  FROM employee_teams et\n  GROUP BY et.employee_id\n),\nemp_team_name AS (\n  SELECT\n    et.employee_id,\n    ARRAY_AGG(t.team_name ORDER BY t.team_name) AS team_names\n  FROM employee_teams et\n  JOIN teams t\n    ON t.team_id = et.team_id\n  GROUP BY et.employee_id\n)\nSELECT\n  d.department_id,\n  d.name,\n  d.location,\n  e.employee_id,\n  et.team_ids AS team_id,\n  etn.team_names AS team_name,\n  c.salary,\n  c.reports_to,\n  e.city\nFROM departments d\nLEFT JOIN employees e\n  ON e.department_id = d.department_id\nLEFT JOIN emp_team et\n  ON et.employee_id = e.employee_id\nLEFT JOIN emp_team_name etn\n  ON etn.employee_id = e.employee_id\nLEFT JOIN compensation c\n  ON c.employee_id = e.employee_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:57:35.009Z"
+  },
+  {
+    "naturalText": "SELECT \n    d.department_id, \n    d.name AS department_name, \n    d.location, \n    e.employee_id, \n    c.salary, \n    c.reports_to, \n    e.city\nFROM \n    departments d\nJOIN \n    employees e ON d.department_id = e.department_id\nJOIN \n    compensation c ON e.employee_id = c.employee_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id;",
+    "sqlQuery": "SELECT \n    d.department_id, \n    d.name AS department_name, \n    d.location, \n    e.employee_id, \n    c.salary, \n    c.reports_to, \n    e.city\nFROM \n    departments d\nJOIN \n    employees e ON d.department_id = e.department_id\nJOIN \n    compensation c ON e.employee_id = c.employee_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id;",
+    "rowCount": 22,
+    "createdAt": "2025-12-18T21:58:13.826Z"
+  },
+  {
+    "naturalText": "WITH et AS (\n  SELECT\n    employee_id,\n    ARRAY_AGG(team_id ORDER BY team_id) AS team_ids\n  FROM employee_teams\n  GROUP BY employee_id\n)\nSELECT\n  d.department_id,\n  d.name,\n  d.location,\n  e.employee_id,\n  c.salary,\n  c.reports_to,\n  e.city,\n  et.team_ids\nFROM departments d\nLEFT JOIN employees e\n  ON e.department_id = d.department_id\nLEFT JOIN compensation c\n  ON c.employee_id = e.employee_id\nLEFT JOIN et\n  ON et.employee_id = e.employee_id;",
+    "sqlQuery": "WITH et AS (\n  SELECT\n    employee_id,\n    ARRAY_AGG(team_id ORDER BY team_id) AS team_ids\n  FROM employee_teams\n  GROUP BY employee_id\n)\nSELECT\n  d.department_id,\n  d.name,\n  d.location,\n  e.employee_id,\n  c.salary,\n  c.reports_to,\n  e.city,\n  et.team_ids\nFROM departments d\nLEFT JOIN employees e\n  ON e.department_id = d.department_id\nLEFT JOIN compensation c\n  ON c.employee_id = e.employee_id\nLEFT JOIN et\n  ON et.employee_id = e.employee_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:58:41.021Z"
   }
 ]

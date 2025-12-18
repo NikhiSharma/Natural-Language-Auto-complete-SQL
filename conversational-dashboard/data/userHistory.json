@@ -1,5 +1,50 @@
 [
   {
+    "naturalText": "Now optimize this query assuming employee_teams has high cardinality.",
+    "createdAt": "2025-12-18T21:59:28.537Z",
+    "id": "u-1766095168537"
+  },
+  {
+    "naturalText": "Remove teams from the tables and give others",
+    "createdAt": "2025-12-18T21:57:51.583Z",
+    "id": "u-1766095071583"
+  },
+  {
+    "naturalText": "Give me all tables in single tabe",
+    "createdAt": "2025-12-18T21:56:57.519Z",
+    "id": "u-1766095017519"
+  },
+  {
+    "naturalText": "give all tables in single table except employee, compensation",
+    "createdAt": "2025-12-18T21:48:20.961Z",
+    "id": "u-1766094500961"
+  },
+  {
+    "naturalText": "keep the name back",
+    "createdAt": "2025-12-18T21:47:05.169Z",
+    "id": "u-1766094425169"
+  },
+  {
+    "naturalText": "ok so in the table remove name as well",
+    "createdAt": "2025-12-18T21:46:18.234Z",
+    "id": "u-1766094378234"
+  },
+  {
+    "naturalText": "now remove employee, team and keep everything else",
+    "createdAt": "2025-12-18T21:45:10.937Z",
+    "id": "u-1766094310937"
+  },
+  {
+    "naturalText": "now remove team and compensation both",
+    "createdAt": "2025-12-18T21:40:31.267Z",
+    "id": "u-1766094031272"
+  },
+  {
+    "naturalText": "now i dont want team in it",
+    "createdAt": "2025-12-18T21:06:20.452Z",
+    "id": "u-1766091980452"
+  },
+  {
     "naturalText": "merge all tables in a single table",
     "createdAt": "2025-12-18T21:05:15.926Z",
     "id": "u-1766091915926"

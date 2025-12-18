@@ -210,23 +210,33 @@ function calculateCostBonus(sql: string): number {
   const lower = sql.toLowerCase();
   let bonus = 0;
 
-  // MAJOR BONUS: Prefer JOINs over subqueries
-  const hasSubquery = lower.includes("where") && (
+  // Check for CTEs (Common Table Expressions) - advanced optimization
+  const hasCTE = lower.includes("with ");
+  const hasCTEWithAgg = hasCTE && (lower.includes("array_agg") || lower.includes("group by"));
+
+  // MAJOR BONUS: CTEs with aggregation (best practice for complex queries)
+  if (hasCTEWithAgg) {
+    bonus += 40; // Highest reward for modular, optimized queries
+  }
+
+  // MAJOR BONUS: Reward aggregation for one-to-many relationships
+  if (lower.includes("array_agg") && lower.includes("group by")) {
+    bonus += 25; // Best pattern for handling multiple teams per employee
+  }
+
+  // MAJOR BONUS: Prefer JOINs over correlated subqueries in WHERE
+  const hasCorrelatedSubquery = lower.includes("where") && (
     lower.includes("in (select") ||
     lower.includes("in ( select") ||
     lower.includes("exists (select")
   );
   const hasJoin = lower.includes("join");
 
-  if (hasJoin && !hasSubquery) {
+  if (hasJoin && !hasCorrelatedSubquery) {
     bonus += 20; // Reward proper JOINs
-  } else if (hasSubquery) {
+  } else if (hasCorrelatedSubquery && !hasCTE) {
+    // Only penalize correlated subqueries if NOT using CTE pattern
     bonus -= 15; // Penalize subqueries when JOINs could be used
-  }
-
-  // MAJOR BONUS: Reward aggregation for one-to-many relationships
-  if (lower.includes("array_agg") && lower.includes("group by")) {
-    bonus += 25; // Best pattern for handling multiple teams per employee
   }
 
   // Reward LEFT JOIN for optional relationships
@@ -244,8 +254,8 @@ function calculateCostBonus(sql: string): number {
     bonus -= 5;
   }
 
-  // Penalty for missing WHERE when filters are likely needed
-  if (!lower.includes("where") && !lower.includes("group by")) {
+  // Penalty for missing WHERE/GROUP BY (less strict if using CTE)
+  if (!lower.includes("where") && !lower.includes("group by") && !hasCTE) {
     bonus -= 5; // Mild penalty
   }
 

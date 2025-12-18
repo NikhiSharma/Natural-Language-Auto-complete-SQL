@@ -134,11 +134,12 @@ OPTIMIZATION PROCESS:
    - Index efficiency: Which foreign key columns enable fast lookups?
 
 3. **Apply cost-aware optimization principles**:
+   - PREFER: CTEs (WITH clause) + ARRAY_AGG for complex aggregations (best pattern for modularity)
    - PREFER: Early filtering (WHERE before JOIN), minimal intermediate result sizes
    - PREFER: Aggregation (ARRAY_AGG + GROUP BY) over row multiplication for one-to-many joins
-   - PREFER: Direct JOINs over subqueries when estimated cardinality is low
+   - PREFER: Direct JOINs over correlated subqueries when estimated cardinality is low
    - PREFER: LEFT JOIN for optional relationships to preserve base table rows
-   - AVOID: Full table scans, Cartesian products, DISTINCT as a band-aid for duplicates
+   - AVOID: Full table scans, Cartesian products, DISTINCT as a band-aid for duplicates, correlated subqueries in WHERE
 
 4. **Select the single best query** based on lowest expected execution cost
    - Minimize rows processed at each step
