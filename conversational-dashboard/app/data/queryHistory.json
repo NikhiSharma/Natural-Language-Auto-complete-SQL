@@ -2908,5 +2908,47 @@
     "sqlQuery": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    compensation c ON e.employee_id = c.employee_id\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nWHERE \n    c.salary > 120000;",
     "rowCount": 20,
     "createdAt": "2025-12-18T18:56:55.294Z"
+  },
+  {
+    "naturalText": "SELECT \n    e.employee_id,\n    e.name AS employee_name,\n    e.city,\n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nLEFT JOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "sqlQuery": "SELECT \n    e.employee_id,\n    e.name AS employee_name,\n    e.city,\n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nLEFT JOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "rowCount": 22,
+    "createdAt": "2025-12-18T20:48:38.016Z"
+  },
+  {
+    "naturalText": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.department_id AS department_id_2,\n  d.name AS department_name,\n  d.location,\n  t.team_id,\n  t.team_name,\n  c.salary,\n  c.reports_to\nFROM employees AS e\nLEFT JOIN departments AS d\n  ON d.department_id = e.department_id\nLEFT JOIN compensation AS c\n  ON c.employee_id = e.employee_id\nLEFT JOIN LATERAL (\n  SELECT\n    t2.team_id,\n    t2.team_name\n  FROM employee_teams AS et\n  JOIN teams AS t2\n    ON t2.team_id = et.team_id\n  WHERE et.employee_id = e.employee_id\n  ORDER BY t2.team_id\n  LIMIT 1\n) AS t ON TRUE;",
+    "sqlQuery": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.department_id AS department_id_2,\n  d.name AS department_name,\n  d.location,\n  t.team_id,\n  t.team_name,\n  c.salary,\n  c.reports_to\nFROM employees AS e\nLEFT JOIN departments AS d\n  ON d.department_id = e.department_id\nLEFT JOIN compensation AS c\n  ON c.employee_id = e.employee_id\nLEFT JOIN LATERAL (\n  SELECT\n    t2.team_id,\n    t2.team_name\n  FROM employee_teams AS et\n  JOIN teams AS t2\n    ON t2.team_id = et.team_id\n  WHERE et.employee_id = e.employee_id\n  ORDER BY t2.team_id\n  LIMIT 1\n) AS t ON TRUE;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T20:49:17.206Z"
+  },
+  {
+    "naturalText": "SELECT \n    e.employee_id,\n    e.name AS employee_name,\n    e.city,\n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nLEFT JOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "sqlQuery": "SELECT \n    e.employee_id,\n    e.name AS employee_name,\n    e.city,\n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nLEFT JOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "rowCount": 22,
+    "createdAt": "2025-12-18T20:51:40.731Z"
+  },
+  {
+    "naturalText": "SELECT \n    e.employee_id, \n    e.name, \n    e.city, \n    e.department_id, \n    d.location, \n    c.salary, \n    c.reports_to\nFROM \n    employees e\nJOIN \n    compensation c ON e.employee_id = c.employee_id\nJOIN \n    departments d ON e.department_id = d.department_id;",
+    "sqlQuery": "SELECT \n    e.employee_id, \n    e.name, \n    e.city, \n    e.department_id, \n    d.location, \n    c.salary, \n    c.reports_to\nFROM \n    employees e\nJOIN \n    compensation c ON e.employee_id = c.employee_id\nJOIN \n    departments d ON e.department_id = d.department_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T20:52:27.760Z"
+  },
+  {
+    "naturalText": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.location,\n  c.salary,\n  c.reports_to\nFROM employees AS e\nLEFT JOIN departments AS d\n  ON d.department_id = e.department_id\nLEFT JOIN compensation AS c\n  ON c.employee_id = e.employee_id\nWHERE NOT EXISTS (\n  SELECT 1\n  FROM employee_teams AS et\n  WHERE et.employee_id = e.employee_id\n);",
+    "sqlQuery": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.location,\n  c.salary,\n  c.reports_to\nFROM employees AS e\nLEFT JOIN departments AS d\n  ON d.department_id = e.department_id\nLEFT JOIN compensation AS c\n  ON c.employee_id = e.employee_id\nWHERE NOT EXISTS (\n  SELECT 1\n  FROM employee_teams AS et\n  WHERE et.employee_id = e.employee_id\n);",
+    "rowCount": 1,
+    "createdAt": "2025-12-18T20:52:50.646Z"
+  },
+  {
+    "naturalText": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nLEFT JOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "sqlQuery": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nLEFT JOIN \n    compensation c ON e.employee_id = c.employee_id;",
+    "rowCount": 22,
+    "createdAt": "2025-12-18T21:05:31.135Z"
+  },
+  {
+    "naturalText": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.name AS department_name,\n  d.location,\n  et.team_id,\n  t.team_name,\n  c.salary,\n  c.reports_to\nFROM employees e\nLEFT JOIN departments d\n  ON d.department_id = e.department_id\nLEFT JOIN compensation c\n  ON c.employee_id = e.employee_id\nLEFT JOIN LATERAL (\n  SELECT MIN(et1.team_id) AS team_id\n  FROM employee_teams et1\n  WHERE et1.employee_id = e.employee_id\n) et\n  ON TRUE\nLEFT JOIN teams t\n  ON t.team_id = et.team_id;",
+    "sqlQuery": "SELECT\n  e.employee_id,\n  e.name,\n  e.city,\n  e.department_id,\n  d.name AS department_name,\n  d.location,\n  et.team_id,\n  t.team_name,\n  c.salary,\n  c.reports_to\nFROM employees e\nLEFT JOIN departments d\n  ON d.department_id = e.department_id\nLEFT JOIN compensation c\n  ON c.employee_id = e.employee_id\nLEFT JOIN LATERAL (\n  SELECT MIN(et1.team_id) AS team_id\n  FROM employee_teams et1\n  WHERE et1.employee_id = e.employee_id\n) et\n  ON TRUE\nLEFT JOIN teams t\n  ON t.team_id = et.team_id;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T21:05:56.420Z"
   }
 ]

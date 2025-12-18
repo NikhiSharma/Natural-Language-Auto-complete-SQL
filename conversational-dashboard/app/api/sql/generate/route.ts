@@ -49,25 +49,46 @@ ${schemaDescription}
 
 ${schema.relationships.length > 0 ? `FOREIGN KEY RELATIONSHIPS:\n${relationshipsDescription}` : ""}
 
-INSTRUCTIONS:
-1. Analyze the objective to understand what data is requested
-2. Identify which tables need to be joined based on relationships
-3. Use proper JOIN syntax with table aliases
-4. Apply filters from objective.scope.filters
-5. Select columns from objective.constraints.mustInclude
+YOUR TASK: Act as a cost-aware query optimizer.
 
-OPTIMIZATION GUIDELINES (for highest quality):
-- PREFER JOINs over subqueries (e.g., JOIN compensation c ON e.employee_id = c.employee_id instead of WHERE employee_id IN (SELECT ...))
-- For one-to-many relationships (e.g., employees with multiple teams):
-  * USE ARRAY_AGG with GROUP BY to aggregate related data
-  * Example: ARRAY_AGG(t.team_name ORDER BY t.team_name) AS teams, then GROUP BY e.employee_id, e.name, ...
-  * This prevents duplicate rows and returns cleaner, aggregated results
-- Use LEFT JOIN for optional relationships (not all records may have related data)
-- Include ORDER BY for consistent, predictable results
+PROCESS:
+1. **Enumerate candidate plans**: For this objective, mentally list 2-3 valid SQL formulations
+   - Example candidates: JOINs vs subqueries, different join orders, aggregation strategies
 
-Return ONLY the SQL query, no explanations
+2. **Analyze performance tradeoffs** for each candidate:
+   - Cardinality: How many rows after each operation?
+   - Join fan-out: Does joining create duplicates requiring GROUP BY?
+   - Filter pushdown: Can WHERE clauses reduce rows early?
+   - Index usage: Which columns are in foreign keys?
 
-Generate a valid PostgreSQL query:`;
+3. **Reason about cost factors**:
+   - PREFER: Early filtering (WHERE before JOIN), reduced intermediate result sizes
+   - PREFER: Aggregation (ARRAY_AGG + GROUP BY) over Cartesian products for one-to-many
+   - PREFER: Direct JOINs over subqueries when cardinality is low
+   - PREFER: LEFT JOIN for optional relationships to avoid losing base rows
+   - AVOID: Full table scans, unnecessary join fan-out, duplicate row elimination via DISTINCT
+
+4. **Select the single best query** based on expected execution efficiency
+   - Minimize rows at each step
+   - Push filters down close to base tables
+   - Use aggregation to prevent row multiplication
+   - Preserve all semantic constraints from the objective
+
+CONSTRAINTS TO PRESERVE:
+- Include ALL columns from objective.constraints.mustInclude
+- Apply ALL filters from objective.scope.filters
+- Respect the dataSource tables specified
+- Use proper table aliases for readability
+
+SEMANTIC INTENT PRESERVATION (CRITICAL):
+- When optimizing, preserve the semantic intent of the original query
+- Removing a table means eliminating joins to that table, NOT introducing exclusion predicates unless explicitly requested
+- Example: "remove team" → eliminate team JOIN, don't add WHERE team_id NOT IN (...)
+- Only add exclusion filters (NOT IN, !=, EXCEPT) when the user explicitly requests exclusion
+
+OUTPUT: Return ONLY the selected optimized PostgreSQL query, no explanations or commentary
+
+Generate the optimal query:`;
 
     const response = await openai.chat.completions.create({
       model: OBJECTIVE_MODEL,

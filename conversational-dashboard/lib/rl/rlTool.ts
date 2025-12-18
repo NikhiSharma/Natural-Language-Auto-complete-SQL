@@ -110,7 +110,7 @@ export async function generateSQL(input: {
     .join("\n");
 
   const prompt = `
-You are an autonomous SQL query generator for a PostgreSQL database.
+You are a cost-aware SQL query optimizer for a PostgreSQL database.
 
 OBJECTIVE:
 ${JSON.stringify(objective, null, 2)}
@@ -120,35 +120,40 @@ ${schemaDescription}
 
 ${detailedSchema.relationships.length > 0 ? `FOREIGN KEY RELATIONSHIPS:\n${relationshipsDescription}` : ""}
 
-${previousSql ? `PREVIOUS SQL:\n${previousSql}` : ""}
-${feedback ? `CRITIC FEEDBACK:\n${JSON.stringify(feedback, null, 2)}` : ""}
+${previousSql ? `PREVIOUS QUERY ATTEMPT:\n${previousSql}` : ""}
+${feedback ? `CRITIC FEEDBACK ON PREVIOUS ATTEMPT:\n${JSON.stringify(feedback, null, 2)}\n\nUse this feedback to improve the query.` : ""}
 
-INSTRUCTIONS:
-1. Analyze the objective to understand what data is requested
-2. Identify which tables need to be joined based on the dataSource and relationships
-3. Use proper JOIN syntax with table aliases
-4. Apply filters from objective.scope.filters array
-5. Select only the columns mentioned in objective.constraints.mustInclude
-6. If filtering by a specific entity (like a department name), add appropriate WHERE clause
-7. Use PostgreSQL syntax
-8. Return ONLY the SQL query, no explanations or markdown
+OPTIMIZATION PROCESS:
+1. **Enumerate candidate plans**: Mentally consider 2-3 valid SQL formulations for this objective
+   - Example candidates: Different join orders, JOINs vs subqueries, aggregation strategies
 
-CRITICAL RULES:
+2. **Analyze performance tradeoffs**:
+   - Cardinality: How many rows result from each operation?
+   - Join fan-out: Does this join create duplicates that need GROUP BY?
+   - Filter pushdown: Can WHERE clauses reduce rows before expensive JOINs?
+   - Index efficiency: Which foreign key columns enable fast lookups?
+
+3. **Apply cost-aware optimization principles**:
+   - PREFER: Early filtering (WHERE before JOIN), minimal intermediate result sizes
+   - PREFER: Aggregation (ARRAY_AGG + GROUP BY) over row multiplication for one-to-many joins
+   - PREFER: Direct JOINs over subqueries when estimated cardinality is low
+   - PREFER: LEFT JOIN for optional relationships to preserve base table rows
+   - AVOID: Full table scans, Cartesian products, DISTINCT as a band-aid for duplicates
+
+4. **Select the single best query** based on lowest expected execution cost
+   - Minimize rows processed at each step
+   - Push filters to base tables
+   - Use aggregation to prevent row explosion
+   - Preserve all semantic constraints and required columns
+
+CONSTRAINTS TO PRESERVE (CRITICAL):
 - Study the LIVE schema above - don't assume column names
-- Use proper JOINs based on foreign key relationships
-- Apply ALL filters from the objective
-- Select ALL columns from mustInclude
+- Include ALL columns from objective.constraints.mustInclude
+- Apply ALL filters from objective.scope.filters
+- Use proper JOINs based on foreign key relationships shown above
 - Use clear table aliases (e.g., e for employees, d for departments, c for compensation)
 
-OPTIMIZATION GUIDELINES (for highest quality):
-- PREFER JOINs over subqueries (e.g., JOIN compensation c ON e.employee_id = c.employee_id instead of WHERE employee_id IN (SELECT ...))
-- For one-to-many relationships (e.g., employees with multiple teams):
-  * USE ARRAY_AGG with GROUP BY to aggregate related data
-  * Example: ARRAY_AGG(t.team_name ORDER BY t.team_name) AS teams, then GROUP BY e.employee_id, e.name, ...
-  * This prevents duplicate rows and returns cleaner, aggregated results
-- Use LEFT JOIN for optional relationships (not all records may have related data)
-- Include ORDER BY for consistent, predictable results
-- When JOINing multiple tables, always GROUP BY all non-aggregated columns to avoid duplicates
+OUTPUT: Return ONLY the selected optimized PostgreSQL query, no explanations or markdown
 `;
 
   if (!process.env.OPENAI_API_KEY) {
