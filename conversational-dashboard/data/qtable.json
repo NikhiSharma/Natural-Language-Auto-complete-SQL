@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updatedAt": "2025-12-18T05:52:24.153Z",
+  "updatedAt": "2025-12-18T05:55:27.288Z",
   "hyperparams": {
     "alpha": 0.1,
     "gamma": 0.9,
-    "epsilon": 0.14657537092873604,
+    "epsilon": 0.1451132816037219,
     "epsilonDecay": 0.995,
     "epsilonMin": 0.05,
     "maxQTableSize": 10000,
@@ -171,6 +171,12 @@
     "||d.name = 'Engineering';||||0||0||7bf24480": {
       "llm_policy": 130.78661643522773,
       "modify_where": 17.564916050795166
+    },
+    "e.name||d.name = 'Engineering';||||0||0||9e931471": {
+      "add_order": 12.045000000000002
+    },
+    "e.name||d.name = 'Engineering';||||0||0||3590cc78": {
+      "llm_policy": 12.495000000000001
     }
   }
 }
