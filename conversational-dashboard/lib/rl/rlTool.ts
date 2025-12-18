@@ -139,6 +139,16 @@ CRITICAL RULES:
 - Apply ALL filters from the objective
 - Select ALL columns from mustInclude
 - Use clear table aliases (e.g., e for employees, d for departments, c for compensation)
+
+OPTIMIZATION GUIDELINES (for highest quality):
+- PREFER JOINs over subqueries (e.g., JOIN compensation c ON e.employee_id = c.employee_id instead of WHERE employee_id IN (SELECT ...))
+- For one-to-many relationships (e.g., employees with multiple teams):
+  * USE ARRAY_AGG with GROUP BY to aggregate related data
+  * Example: ARRAY_AGG(t.team_name ORDER BY t.team_name) AS teams, then GROUP BY e.employee_id, e.name, ...
+  * This prevents duplicate rows and returns cleaner, aggregated results
+- Use LEFT JOIN for optional relationships (not all records may have related data)
+- Include ORDER BY for consistent, predictable results
+- When JOINing multiple tables, always GROUP BY all non-aggregated columns to avoid duplicates
 `;
 
   if (!process.env.OPENAI_API_KEY) {

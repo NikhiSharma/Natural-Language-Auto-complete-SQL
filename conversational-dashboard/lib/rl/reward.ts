@@ -45,7 +45,7 @@ export function calculateReward(
     }
   }
 
-  // 2. QUERY QUALITY METRICS (up to 30 points)
+  // 2. QUERY QUALITY METRICS (up to 80 points - significantly increased)
   const simplicityBonus = calculateSimplicityBonus(sql);
   if (simplicityBonus !== 0) {
     details.push(`${simplicityBonus > 0 ? '✓' : '✗'} Simplicity: ${simplicityBonus > 0 ? '+' : ''}${simplicityBonus}`);
@@ -60,9 +60,15 @@ export function calculateReward(
 
   const costBonus = calculateCostBonus(sql);
   if (costBonus !== 0) {
-    details.push(`${costBonus > 0 ? '✓' : '✗'} Cost optimization: ${costBonus > 0 ? '+' : ''}${costBonus}`);
+    details.push(`${costBonus > 0 ? '✓' : '✗'} Query optimization: ${costBonus > 0 ? '+' : ''}${costBonus}`);
   }
   qualityScore += costBonus;
+
+  const patternBonus = calculatePatternBonus(sql, objective);
+  if (patternBonus !== 0) {
+    details.push(`${patternBonus > 0 ? '✓' : '✗'} Query patterns: ${patternBonus > 0 ? '+' : ''}${patternBonus}`);
+  }
+  qualityScore += patternBonus;
 
   // 3. EXECUTION METRICS (autonomous learning - up to 20 points)
   if (executionMetrics) {
@@ -80,6 +86,48 @@ export function calculateReward(
     total: constraintScore + qualityScore,
     details,
   };
+}
+
+/**
+ * Pattern bonus - reward SQL best practices
+ */
+function calculatePatternBonus(sql: string, objective: ObjectiveConfig): number {
+  const lower = sql.toLowerCase();
+  let bonus = 0;
+
+  // Check if query involves one-to-many relationships (e.g., employees with multiple teams)
+  const hasOneToMany =
+    objective.constraints?.dataSource?.includes("_with_") ||
+    lower.includes("employee_teams") ||
+    lower.includes("teams");
+
+  if (hasOneToMany) {
+    // BEST PRACTICE: Use ARRAY_AGG with GROUP BY to avoid duplicates
+    if (lower.includes("array_agg") && lower.includes("group by")) {
+      bonus += 30; // Major bonus for best pattern
+    }
+    // ACCEPTABLE: Use DISTINCT to handle duplicates
+    else if (lower.includes("distinct")) {
+      bonus += 10; // Minor bonus
+    }
+    // BAD: No deduplication for one-to-many
+    else if (!lower.includes("group by") && !lower.includes("distinct")) {
+      bonus -= 20; // Penalty for potential duplicates
+    }
+  }
+
+  // Reward proper JOIN order (fact table first, then dimensions)
+  if (lower.includes("from employees") && lower.includes("join")) {
+    bonus += 5; // Good practice to start with main entity
+  }
+
+  // Reward table aliases for readability
+  const aliasCount = (lower.match(/\sas\s[a-z]/g) || []).length;
+  if (aliasCount >= 2) {
+    bonus += 5; // Uses aliases consistently
+  }
+
+  return bonus;
 }
 
 /**
@@ -156,24 +204,55 @@ function calculateSpecificityBonus(sql: string): number {
 }
 
 /**
- * Cost bonus - penalize expensive operations
+ * Cost bonus - reward optimized SQL patterns
  */
 function calculateCostBonus(sql: string): number {
   const lower = sql.toLowerCase();
-  let bonus = 10; // Start with bonus
+  let bonus = 0;
 
-  // Penalty for SELECT *
-  if (lower.includes("select *")) bonus -= 5;
+  // MAJOR BONUS: Prefer JOINs over subqueries
+  const hasSubquery = lower.includes("where") && (
+    lower.includes("in (select") ||
+    lower.includes("in ( select") ||
+    lower.includes("exists (select")
+  );
+  const hasJoin = lower.includes("join");
 
-  // Penalty for missing WHERE (full table scan)
-  if (!lower.includes("where")) bonus -= 10;
+  if (hasJoin && !hasSubquery) {
+    bonus += 20; // Reward proper JOINs
+  } else if (hasSubquery) {
+    bonus -= 15; // Penalize subqueries when JOINs could be used
+  }
 
-  // Penalty for JOINs (if we have them)
-  const joinCount = (lower.match(/\sjoin\s/g) || []).length;
-  bonus -= joinCount * 5;
+  // MAJOR BONUS: Reward aggregation for one-to-many relationships
+  if (lower.includes("array_agg") && lower.includes("group by")) {
+    bonus += 25; // Best pattern for handling multiple teams per employee
+  }
 
-  // Bonus for LIMIT clause
-  if (lower.includes("limit")) bonus += 5;
+  // Reward LEFT JOIN for optional relationships
+  if (lower.includes("left join")) {
+    bonus += 10; // Good for nullable relationships
+  }
+
+  // Reward GROUP BY (prevents duplicate rows)
+  if (lower.includes("group by")) {
+    bonus += 15;
+  }
+
+  // Penalty for SELECT * in production queries
+  if (lower.includes("select *") && !lower.includes("select * from")) {
+    bonus -= 5;
+  }
+
+  // Penalty for missing WHERE when filters are likely needed
+  if (!lower.includes("where") && !lower.includes("group by")) {
+    bonus -= 5; // Mild penalty
+  }
+
+  // Bonus for ordering results
+  if (lower.includes("order by")) {
+    bonus += 5;
+  }
 
   return bonus;
 }

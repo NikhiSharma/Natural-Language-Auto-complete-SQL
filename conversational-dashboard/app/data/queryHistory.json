@@ -2896,5 +2896,17 @@
     "sqlQuery": "SELECT \n    e.employee_id,\n    e.city,\n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    departments d ON e.department_id = d.department_id\nJOIN \n    compensation c ON e.employee_id = c.employee_id\nJOIN \n    employee_teams et ON e.employee_id = et.employee_id\nJOIN \n    teams t ON et.team_id = t.team_id;",
     "rowCount": 5,
     "createdAt": "2025-12-18T17:24:07.242Z"
+  },
+  {
+    "naturalText": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    e.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    compensation c ON e.employee_id = c.employee_id\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nWHERE \n    c.salary > 140000;",
+    "sqlQuery": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    e.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    compensation c ON e.employee_id = c.employee_id\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nWHERE \n    c.salary > 140000;",
+    "rowCount": 1,
+    "createdAt": "2025-12-18T17:41:17.023Z"
+  },
+  {
+    "naturalText": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    compensation c ON e.employee_id = c.employee_id\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nWHERE \n    c.salary > 120000;",
+    "sqlQuery": "SELECT \n    e.employee_id,\n    e.name,\n    e.city,\n    d.department_id,\n    d.name AS department_name,\n    d.location,\n    et.team_id,\n    t.team_name,\n    c.salary,\n    c.reports_to\nFROM \n    employees e\nJOIN \n    compensation c ON e.employee_id = c.employee_id\nJOIN \n    departments d ON e.department_id = d.department_id\nLEFT JOIN \n    employee_teams et ON e.employee_id = et.employee_id\nLEFT JOIN \n    teams t ON et.team_id = t.team_id\nWHERE \n    c.salary > 120000;",
+    "rowCount": 20,
+    "createdAt": "2025-12-18T18:56:55.294Z"
   }
 ]

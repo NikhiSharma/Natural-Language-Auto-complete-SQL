@@ -1,5 +1,35 @@
 [
   {
+    "naturalText": "Get employees who earn more than 120000 along with their department details",
+    "createdAt": "2025-12-18T19:27:47.723Z",
+    "id": "u-1766086067723"
+  },
+  {
+    "naturalText": "Optimize the following SQL query for performance and scalability.\nAssume employee_teams is a many-to-many table and compensation is one-to-one with employees.\nPreserve the result semantics.\nExplain the optimizations applied.",
+    "createdAt": "2025-12-18T19:25:36.482Z",
+    "id": "u-1766085936482"
+  },
+  {
+    "naturalText": "Generate a SQL query to join employees, departments, teams, employee_teams, and compensation and return employee name, city, department name, team name, and salary.",
+    "createdAt": "2025-12-18T19:25:05.550Z",
+    "id": "u-1766085905550"
+  },
+  {
+    "naturalText": "Generate a SQL query to join employees, departments, teams, employee_teams, and compensation\nand return employee name, city, department name, team name, and salary.",
+    "createdAt": "2025-12-18T19:21:38.848Z",
+    "id": "u-1766085698848"
+  },
+  {
+    "naturalText": "join all tables where salary > 120000",
+    "createdAt": "2025-12-18T18:56:38.544Z",
+    "id": "u-1766084198547"
+  },
+  {
+    "naturalText": "Join all tables where salary > 140000",
+    "createdAt": "2025-12-18T17:40:49.564Z",
+    "id": "u-1766079649564"
+  },
+  {
     "naturalText": "Join all the tables",
     "createdAt": "2025-12-18T17:11:23.601Z",
     "id": "u-1766077883601"

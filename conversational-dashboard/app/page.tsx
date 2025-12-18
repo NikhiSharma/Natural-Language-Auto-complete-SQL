@@ -423,12 +423,26 @@ export default function Home() {
                     </button>
                   </div>
                 ) : (
-                  <button
-                    onClick={() => setObjectiveLocked(false)}
-                    className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg text-sm font-medium transition-colors text-white"
-                  >
-                    Edit
-                  </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setObjectiveLocked(false)}
+                      className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg text-sm font-medium transition-colors text-white"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={generateSQL}
+                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition-colors text-white"
+                    >
+                      Generate SQL
+                    </button>
+                    <button
+                      onClick={optimizeSQL}
+                      className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-sm font-medium transition-colors text-white"
+                    >
+                      Optimize with RL
+                    </button>
+                  </div>
                 )}
               </div>
               <textarea

@@ -55,7 +55,17 @@ INSTRUCTIONS:
 3. Use proper JOIN syntax with table aliases
 4. Apply filters from objective.scope.filters
 5. Select columns from objective.constraints.mustInclude
-6. Return ONLY the SQL query, no explanations
+
+OPTIMIZATION GUIDELINES (for highest quality):
+- PREFER JOINs over subqueries (e.g., JOIN compensation c ON e.employee_id = c.employee_id instead of WHERE employee_id IN (SELECT ...))
+- For one-to-many relationships (e.g., employees with multiple teams):
+  * USE ARRAY_AGG with GROUP BY to aggregate related data
+  * Example: ARRAY_AGG(t.team_name ORDER BY t.team_name) AS teams, then GROUP BY e.employee_id, e.name, ...
+  * This prevents duplicate rows and returns cleaner, aggregated results
+- Use LEFT JOIN for optional relationships (not all records may have related data)
+- Include ORDER BY for consistent, predictable results
+
+Return ONLY the SQL query, no explanations
 
 Generate a valid PostgreSQL query:`;
 
