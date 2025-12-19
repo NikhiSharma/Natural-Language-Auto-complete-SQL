@@ -17,27 +17,6 @@ This is a standalone React hook (`useOptimizeSQL`) and API endpoint that optimiz
 - Node.js 18+
 - OpenAI API key
 
-### Setup
-
-```bash
-# 1. Clone/download the code
-git clone <repo-url>
-cd conversational-dashboard
-
-# 2. Install dependencies
-npm install
-
-# 3. Create .env.local with YOUR database
-DATABASE_URL=postgresql://user:password@host:port/your_database
-OPENAI_API_KEY=your_openai_key
-
-# 4. Run it
-npm run dev
-```
-
-Server runs on `http://localhost:3004`
-
----
 
 ## 📡 API Endpoint
 
@@ -240,23 +219,6 @@ useOptimizeSQL({
 
 ## 🌐 Deployment
 
-### Deploy to Vercel (Free)
-
-```bash
-# 1. Push to GitHub
-git add .
-git commit -m "Deploy SQL optimizer"
-git push origin main
-
-# 2. Go to vercel.com
-# 3. Import your GitHub repo
-# 4. Add environment variables:
-#    - DATABASE_URL
-#    - OPENAI_API_KEY
-# 5. Click Deploy
-```
-
-Your API will be at: `https://your-app.vercel.app/api/optimize-sql`
 
 ### Using the Live API
 
@@ -395,15 +357,7 @@ The optimizer couldn't satisfy all constraints. Check:
 
 ---
 
-## 📚 Additional Resources
 
-- Full implementation details: [IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md)
-- Hook documentation: [lib/hooks/README.md](./lib/hooks/README.md)
-- Example component: [examples/CustomOptimizer.tsx](./examples/CustomOptimizer.tsx)
-
----
-
-## 🎯 Summary for Shawn
 
 **To use this:**
 
@@ -415,11 +369,10 @@ https://natural-language-auto-complete-sql.vercel.app/api/optimize-sql
 
 ### Option 2: Deploy Your Own Instance
 1. **Set your DATABASE_URL** to any PostgreSQL database
-2. **Deploy to Vercel** (free)
-3. **Call your own API** or use the React hook
-4. **Get optimized SQL** automatically!
+2. **Call your own API** or use the React hook
+3. **Get optimized SQL** automatically!
 
-The system works with **any PostgreSQL schema** - it discovers your tables/columns automatically and generates optimized SQL with CTEs and ARRAY_AGG patterns for complex queries.
+The system works with **any PostgreSQL schema**
 
 ---
 
