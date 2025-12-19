@@ -10,7 +10,7 @@ This is a standalone React hook (`useOptimizeSQL`) and API endpoint that optimiz
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 - PostgreSQL database (any schema/data)
@@ -105,7 +105,7 @@ console.log(result.sql);
 
 ---
 
-## ⚛️ React Hook Usage
+##  React Hook Usage
 
 ### Basic Example
 
@@ -155,12 +155,12 @@ function AdvancedComponent() {
 
     // Called when complete
     onComplete: (result) => {
-      console.log("✅ Done!", result.sql);
+      console.log(" Done!", result.sql);
     },
 
     // Called on error
     onError: (error) => {
-      console.error("❌ Failed:", error.message);
+      console.error(" Failed:", error.message);
     }
   });
 
@@ -217,7 +217,7 @@ useOptimizeSQL({
 
 ---
 
-## 🌐 Deployment
+##  Deployment
 
 
 ### Using the Live API
@@ -254,7 +254,7 @@ console.log(result.sql);
 
 ---
 
-## 💡 Real-World Examples
+##  Real-World Examples
 
 ### Example 1: E-commerce Database
 
@@ -307,7 +307,7 @@ const result = await optimizeSQL({
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 ✅ **Works with ANY PostgreSQL database** - Just set DATABASE_URL
 ✅ **Automatic schema discovery** - No manual configuration needed
@@ -319,7 +319,7 @@ const result = await optimizeSQL({
 
 ---
 
-## 🔧 How It Works
+##  How It Works
 
 1. **You provide an objective** - Natural language description + constraints
 2. **AI generates SQL candidates** - Uses RL to try different approaches
@@ -336,7 +336,7 @@ const result = await optimizeSQL({
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### "HTTP ERROR 405" when visiting /api/optimize-sql in browser
 
