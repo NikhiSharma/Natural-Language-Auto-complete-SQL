@@ -1,8 +1,12 @@
-# SQL Optimizer - Usage Guide for Shawn
+  # SQL Optimizer - Usage Guide for Shawn
 
 ## Overview
 
 This is a standalone React hook (`useOptimizeSQL`) and API endpoint that optimizes SQL queries using Reinforcement Learning. It works with **any PostgreSQL database** - just point it to your database and it automatically discovers your schema and optimizes queries.
+
+**Live Demo**: https://natural-language-auto-complete-sql.vercel.app/
+
+**Open Source**: Feel free to fork, modify, and use this in your own projects!
 
 ---
 
@@ -254,13 +258,36 @@ git push origin main
 
 Your API will be at: `https://your-app.vercel.app/api/optimize-sql`
 
-### Using Deployed API
+### Using the Live API
+
+You can use the live API endpoint directly without deploying anything:
 
 ```tsx
-// Point hook to your deployed endpoint
+// Use the live API endpoint
 const { optimizeSQL } = useOptimizeSQL({
-  apiEndpoint: "https://your-app.vercel.app/api/optimize-sql"
+  apiEndpoint: "https://natural-language-auto-complete-sql.vercel.app/api/optimize-sql"
 });
+```
+
+**Example API Call:**
+```javascript
+const response = await fetch('https://natural-language-auto-complete-sql.vercel.app/api/optimize-sql', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    objective: {
+      intent: "Get all employees with departments",
+      constraints: {
+        dataSource: "employees_with_departments",
+        mustInclude: ["employee_id", "name", "department_name"]
+      }
+    },
+    tools: ["explain", "ai"]
+  })
+});
+
+const result = await response.json();
+console.log(result.sql);
 ```
 
 ---
@@ -380,13 +407,22 @@ The optimizer couldn't satisfy all constraints. Check:
 
 **To use this:**
 
+### Option 1: Use the Live API (No Setup Required)
+Just call the live endpoint at:
+```
+https://natural-language-auto-complete-sql.vercel.app/api/optimize-sql
+```
+
+### Option 2: Deploy Your Own Instance
 1. **Set your DATABASE_URL** to any PostgreSQL database
-2. **Run the app** or deploy to Vercel
-3. **Call the API** or use the React hook
+2. **Deploy to Vercel** (free)
+3. **Call your own API** or use the React hook
 4. **Get optimized SQL** automatically!
 
 The system works with **any PostgreSQL schema** - it discovers your tables/columns automatically and generates optimized SQL with CTEs and ARRAY_AGG patterns for complex queries.
 
 ---
+
+**Live Demo**: https://natural-language-auto-complete-sql.vercel.app/
 
 **Questions?** Check the additional resources above or reach out!
