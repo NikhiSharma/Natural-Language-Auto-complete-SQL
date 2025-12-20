@@ -1,42 +1,12 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
-import { ObjectiveConfig } from "@/lib/objective/schema";
-import { OBJECTIVE_MODEL } from "@/lib/llm/models";
-import { introspectSchema } from "@/lib/schema/introspect";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY!,
 });
 
-async function getSchemaDescription() {
-  try {
-    const schema = await introspectSchema();
-
-    const schemaDescription = schema.tables
-      .map((table: any) => {
-        const cols = table.columns.map((c: any) => `${c.name} (${c.type})`).join(", ");
-        return `- Table: ${table.name}\n  Columns: ${cols}`;
-      })
-      .join("\n\n");
-
-    const relationshipsDescription = schema.relationships
-      .map((rel: any) => `- ${rel.from} -> ${rel.to}`)
-      .join("\n");
-
-    return { schemaDescription, relationshipsDescription };
-  } catch (err) {
-    console.error("[Objective Generate] Failed to introspect schema:", err);
-    throw new Error("Cannot generate objective without database schema");
-  }
-}
-
-const getSystemPrompt = (schemaDescription: string, relationshipsDescription: string) => `
-You are an Objective Function Author for a PostgreSQL database.
-
-DATABASE SCHEMA (LIVE FROM PostgreSQL):
-${schemaDescription}
-
-${relationshipsDescription ? `FOREIGN KEY RELATIONSHIPS:\n${relationshipsDescription}` : ""}
+const getSystemPrompt = () => `
+You are an Objective Function Author. You analyze user requests and create structured objective functions.
 
 Current date: ${new Date().toLocaleDateString("en-US", {
   year: "numeric",
@@ -47,139 +17,102 @@ Current date: ${new Date().toLocaleDateString("en-US", {
 You MUST output a VALID JSON object with ALL required fields.
 
 The Objective Function defines:
-- WHAT the user wants
-- WHAT must NEVER change during optimization
-- HOW success is measured
+- WHAT the user wants (intent)
+- WHAT constraints must be satisfied
+- HOW success should be measured
 
 ===========================
 REQUIRED JSON SCHEMA
 ===========================
 
 {
-  "intent": string,
-
-  "scope": {
-    "timeframe": {
-      "type": "RELATIVE" | "ABSOLUTE",
-      "value": string
-    },
-    "entity": {
-      "type": string,
-      "identifier"?: string | string[]
-    },
-    "filters"?: Array<{
-      "field": string,
-      "value": string | string[]
-    }>
-  },
-
+  "intent": string,  // Clear description of what the user wants
+  
+  "domain": string,  // Type: "sql", "content", "analysis", "code", "general"
+  
   "constraints": {
-    "dataSource": string,
-    "mustInclude": string[]
+    "mustInclude": string[],  // Required elements/keywords
+    "mustAvoid": string[],    // Things to avoid
+    "tone"?: string,          // For content: "professional", "casual", "formal", etc.
+    "style"?: string          // Additional style requirements
   },
+  
+  "success_criteria": {
+    "clarity": number,      // 0-1 score for clarity
+    "completeness": number, // 0-1 score for completeness  
+    "accuracy": number      // 0-1 score for accuracy
+  }
 }
 
 ===========================
 RULES
 ===========================
-- intent MUST match the user's actual request - don't add complexity
-- If no timeframe mentioned, use "RELATIVE" with value "all time"
-- If specific entity mentioned (department/employee/city), extract it to entity.identifier
-- For MIXED entity types or multiple filters, use the filters array
-- dataSource should describe which tables are needed (e.g., "employees_with_departments_and_compensation")
-- If query needs data from multiple tables, dataSource should reflect that (use "_with_" pattern)
-- mustInclude should list ALL columns the user wants to see in results
-- For WHERE conditions on specific values (like salary > 140000), add to filters array
+- intent MUST match the user's actual request exactly
+- domain should be: "sql" for queries, "content" for text, "analysis" for data analysis, "code" for programming
+- mustInclude should list key elements the output must have
 - Output ONLY valid JSON
 - No markdown
 - No explanations
 
 EXAMPLES:
 
+User: "write me a professional email about project delays"
+{
+  "intent": "Write professional email about project delays",
+  "domain": "content",
+  "constraints": {
+    "mustInclude": ["project delays", "professional tone"],
+    "mustAvoid": ["casual language", "emojis"],
+    "tone": "professional",
+    "style": "email format"
+  },
+  "success_criteria": {
+    "clarity": 0.9,
+    "completeness": 0.85,
+    "accuracy": 0.9
+  }
+}
+
 User: "show all employees in Engineering"
 {
   "intent": "Get all employees in Engineering department",
-  "scope": {
-    "timeframe": { "type": "RELATIVE", "value": "all time" },
-    "entity": { "type": "department", "identifier": "Engineering" }
-  },
+  "domain": "sql",
   "constraints": {
-    "dataSource": "employees_with_departments",
-    "mustInclude": ["name"]
-  }
-}
-
-User: "name and salary of people in Engineering"
-{
-  "intent": "Get name and salary of Engineering employees",
-  "scope": {
-    "timeframe": { "type": "RELATIVE", "value": "all time" },
-    "entity": { "type": "department", "identifier": "Engineering" }
+    "mustInclude": ["employees", "Engineering department"],
+    "mustAvoid": ["other departments"]
   },
-  "constraints": {
-    "dataSource": "employees_with_compensation",
-    "mustInclude": ["name", "salary"]
-  }
-}
-
-User: "all employees"
-{
-  "intent": "Get all employees",
-  "scope": {
-    "timeframe": { "type": "RELATIVE", "value": "all time" },
-    "entity": { "type": "employee", "identifier": null }
-  },
-  "constraints": {
-    "dataSource": "employees",
-    "mustInclude": []
+  "success_criteria": {
+    "clarity": 0.95,
+    "completeness": 1.0,
+    "accuracy": 1.0
   }
 }
 `;
 
 export async function POST(req: Request) {
-  const { userInput, currentObjective } = await req.json();
+  const { userInput } = await req.json();
 
-  // Fetch live schema
-  const { schemaDescription, relationshipsDescription } = await getSchemaDescription();
-  const systemPrompt = getSystemPrompt(schemaDescription, relationshipsDescription);
+  const systemPrompt = getSystemPrompt();
 
-  // Build messages with context
-  const messages: any[] = [{ role: "system", content: systemPrompt }];
-
-  // If there's a current objective, include it for context
-  if (currentObjective) {
-    messages.push({
-      role: "system",
-      content: `CURRENT OBJECTIVE (for modifications):\n${JSON.stringify(currentObjective, null, 2)}\n\nThe user is requesting a modification to this objective. Apply their changes while preserving the overall structure.`,
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: userInput },
+      ],
+      temperature: 0.3,
     });
+
+    const content = completion.choices[0].message.content || "";
+    const objective = JSON.parse(content);
+
+    return NextResponse.json({ objective });
+  } catch (error: any) {
+    console.error("Error generating objective:", error);
+    return NextResponse.json(
+      { error: error.message || "Failed to generate objective" },
+      { status: 500 }
+    );
   }
-
-  messages.push({ role: "user", content: userInput });
-
-  const response = await openai.chat.completions.create({
-    model: OBJECTIVE_MODEL,
-    temperature: 0.2,
-    messages,
-  });
-
-  function extractJson(text: string) {
-    const match = text.match(/\{[\s\S]*\}/);
-    if (!match) {
-      throw new Error("No JSON object found in model response");
-    }
-    return JSON.parse(match[0]);
-  }
-
-  const raw = response.choices[0].message.content!;
-  const objective = extractJson(raw) as ObjectiveConfig;
-
-  // Fallback intent (defensive)
-  if (!objective.intent || typeof objective.intent !== "string") {
-    objective.intent =
-      typeof userInput === "string" && userInput.trim()
-        ? userInput.trim()
-        : "(no intent provided)";
-  }
-
-  return NextResponse.json({ objective });
 }

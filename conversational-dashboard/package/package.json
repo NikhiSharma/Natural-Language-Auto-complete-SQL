@@ -1,0 +1,53 @@
+{
+  "name": "@nikhilayeturi23/rltool",
+  "version": "1.0.5",
+  "description": "A complete standalone React hook + backend RL optimizer for any domain",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    },
+    "./backend": {
+      "types": "./dist/backend/index.d.ts",
+      "require": "./dist/backend/index.js",
+      "import": "./dist/backend/index.mjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts src/backend/index.ts --format cjs,esm --dts --clean",
+    "dev": "tsup src/index.ts src/backend/index.ts --format cjs,esm --dts --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "hook",
+    "reinforcement-learning",
+    "optimization",
+    "q-learning",
+    "machine-learning",
+    "ai"
+  ],
+  "author": "Nikhila",
+  "license": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NikhilaYeturi/Natural-Language-Auto-complete-SQL"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "react": "^18.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0"
+  }
+}

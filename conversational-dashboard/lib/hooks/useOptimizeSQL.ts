@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useRLTool, RLToolOptions } from "./useRLTool";
 
 /**
  * React Hook for SQL Optimization with RL
  *
- * A standalone, reusable hook that provides SQL optimization functionality
- * with flexible tool configuration and progress tracking.
+ * A specialized wrapper around useRLTool for SQL optimization use cases.
+ * This hook provides SQL-specific types and a convenient interface.
  *
  * @example
  * ```tsx
@@ -39,6 +39,9 @@ export interface OptimizeSQLOptions {
 
   /** API endpoint to use (defaults to /api/optimize-sql) */
   apiEndpoint?: string;
+
+  /** Custom AI endpoint URL (e.g., Cloudflare Worker, defaults to OpenAI) */
+  aiEndpoint?: string;
 }
 
 export interface ProgressLog {
@@ -75,6 +78,8 @@ export interface OptimizationResult {
 
 /**
  * Hook for SQL optimization with RL
+ *
+ * This is now a thin wrapper around the generic useRLTool hook.
  */
 export function useOptimizeSQL(options: OptimizeSQLOptions = {}) {
   const {
@@ -83,91 +88,71 @@ export function useOptimizeSQL(options: OptimizeSQLOptions = {}) {
     onComplete,
     onError,
     apiEndpoint = "/api/optimize-sql",
+    aiEndpoint,
   } = options;
 
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<OptimizationResult | null>(null);
-  const [error, setError] = useState<Error | null>(null);
-  const [progress, setProgress] = useState<ProgressLog[]>([]);
+  // Use the generic RL tool hook
+  const rlOptions: RLToolOptions = {
+    apiEndpoint,
+    config: { tools, aiEndpoint },
+    onProgress: onProgress ? (log) => {
+      onProgress({
+        iteration: log.iteration,
+        action: log.action,
+        passed: log.passed,
+        reward: log.reward,
+        sql: log.output,
+        timestamp: log.timestamp,
+      });
+    } : undefined,
+    onComplete: onComplete ? (result) => {
+      onComplete({
+        sql: result.output,
+        analysis: (result as any).analysis || null,
+        executionResults: (result as any).executionResults || null,
+        optimizationMetadata: result.metadata,
+        message: result.message,
+      });
+    } : undefined,
+    onError,
+  };
+
+  const { optimize, loading, result, error, progress, reset } = useRLTool(rlOptions);
 
   /**
    * Optimize a SQL query based on an objective
    */
-  const optimizeSQL = useCallback(
-    async (objective: any): Promise<OptimizationResult> => {
-      setLoading(true);
-      setError(null);
-      setProgress([]);
+  const optimizeSQL = async (objective: any): Promise<OptimizationResult> => {
+    const rlResult = await optimize({ objective });
 
-      try {
-        const response = await fetch(apiEndpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ objective, tools }),
-        });
+    // Map generic result to SQL-specific result
+    return {
+      sql: rlResult.output,
+      analysis: (rlResult as any).analysis || null,
+      executionResults: (rlResult as any).executionResults || null,
+      optimizationMetadata: rlResult.metadata,
+      message: rlResult.message,
+    };
+  };
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.error || "Optimization failed");
-        }
+  // Map progress logs to SQL-specific format
+  const sqlProgress: ProgressLog[] = progress.map((log) => ({
+    iteration: log.iteration,
+    action: log.action,
+    passed: log.passed,
+    reward: log.reward,
+    sql: log.output,
+    timestamp: log.timestamp,
+  }));
 
-        const data: OptimizationResult = await response.json();
-
-        // Process iteration logs and fire progress callbacks
-        if (data.optimizationMetadata?.iterationLogs) {
-          const logs: ProgressLog[] = data.optimizationMetadata.iterationLogs.map(
-            (log: any) => ({
-              iteration: log.iteration,
-              action: log.action,
-              passed: log.evaluation?.passed || false,
-              reward: log.reward?.total || 0,
-              sql: log.sql,
-              timestamp: Date.now(),
-            })
-          );
-
-          setProgress(logs);
-
-          // Fire onProgress for each iteration
-          if (onProgress) {
-            logs.forEach((log) => onProgress(log));
-          }
-        }
-
-        setResult(data);
-
-        // Fire completion callback
-        if (onComplete) {
-          onComplete(data);
-        }
-
-        return data;
-      } catch (err: any) {
-        const error = err instanceof Error ? err : new Error(String(err));
-        setError(error);
-
-        // Fire error callback
-        if (onError) {
-          onError(error);
-        }
-
-        throw error;
-      } finally {
-        setLoading(false);
-      }
-    },
-    [tools, apiEndpoint, onProgress, onComplete, onError]
-  );
-
-  /**
-   * Reset the hook state
-   */
-  const reset = useCallback(() => {
-    setLoading(false);
-    setResult(null);
-    setError(null);
-    setProgress([]);
-  }, []);
+  // Map result to SQL-specific format
+  const sqlResult: OptimizationResult | null = result ? {
+    sql: result.output,
+    analysis: (result as any).analysis || null,
+    executionResults: (result as any).executionResults || null,
+    optimizationMetadata: result.metadata,
+    message: result.message,
+  } : null;
 
   return {
     /** Function to trigger SQL optimization */
@@ -177,13 +162,13 @@ export function useOptimizeSQL(options: OptimizeSQLOptions = {}) {
     loading,
 
     /** The optimization result (null until complete) */
-    result,
+    result: sqlResult,
 
     /** Error if optimization failed */
     error,
 
     /** Array of progress logs from RL iterations */
-    progress,
+    progress: sqlProgress,
 
     /** Reset the hook state */
     reset,

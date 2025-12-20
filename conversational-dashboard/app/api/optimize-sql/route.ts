@@ -8,6 +8,7 @@ import { rlTool } from "@/lib/rl/rlTool";
  * INPUT:
  * - objective: The objective function
  * - tools (optional): Array of tools to use ["explain", "execute", "ai"]
+ * - aiEndpoint (optional): Custom AI endpoint URL (defaults to OpenAI)
  *
  * OUTPUT:
  * - sql: Optimized SQL query
@@ -17,7 +18,7 @@ import { rlTool } from "@/lib/rl/rlTool";
  */
 export async function POST(req: NextRequest) {
   try {
-    const { objective, tools = ["explain", "ai"] } = await req.json();
+    const { objective, tools = ["explain", "ai"], aiEndpoint } = await req.json();
 
     if (!objective) {
       return NextResponse.json(
@@ -28,9 +29,12 @@ export async function POST(req: NextRequest) {
 
     console.log("[OptimizeSQL] Starting optimization...");
     console.log("[OptimizeSQL] Tools enabled:", tools);
+    if (aiEndpoint) {
+      console.log("[OptimizeSQL] Using custom AI endpoint:", aiEndpoint);
+    }
 
     // Step 1: Generate optimized SQL using RL
-    const rlResult = await rlTool(objective);
+    const rlResult = await rlTool(objective, aiEndpoint);
 
     console.log("[OptimizeSQL] RL optimization complete");
 
@@ -64,7 +68,18 @@ export async function POST(req: NextRequest) {
     }
 
     // Return comprehensive results
+    // Note: The response format supports both the generic RL hook and SQL-specific hook
     return NextResponse.json({
+      // Generic RL format
+      output: rlResult.sql,
+      metadata: {
+        iterations: rlResult.iterations || 0,
+        finalReward: rlResult.finalReward || 0,
+        iterationLogs: rlResult.iterationLogs || [],
+      },
+      message: getOptimizationMessage(rlResult.finalReward || 0),
+
+      // SQL-specific format (for backward compatibility)
       sql: rlResult.sql,
       analysis: analysis
         ? {
@@ -81,7 +96,6 @@ export async function POST(req: NextRequest) {
         finalReward: rlResult.finalReward || 0,
         iterationLogs: rlResult.iterationLogs || [],
       },
-      message: getOptimizationMessage(rlResult.finalReward || 0),
     });
   } catch (error: any) {
     console.error("[OptimizeSQL API] Error:", error);

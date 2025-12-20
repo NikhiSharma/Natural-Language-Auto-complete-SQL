@@ -1,36 +1,29 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useOptimizeSQL } from "@/lib/hooks/useOptimizeSQL";
 
 interface ChatMessage {
   role: "assistant" | "user";
   text: string;
 }
 
-type Stage = "chat" | "objective" | "optimizing" | "sql";
-
 export default function Home() {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-    // CORE STATE
-  const [stage, setStage] = useState<Stage>("chat");
+  // CORE STATE
   const [conversation, setConversation] = useState<ChatMessage[]>([
-    { role: "assistant", text: "Hello there! \n How can I help you today." },
+    { role: "assistant", text: "Hello! I can help you with anything - SQL queries, content writing, data analysis, and more. What would you like me to do?" },
   ]);
 
   const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [lastUserQuery, setLastUserQuery] = useState(""); // Store last query for RL optimization
+  const [generatedOutput, setGeneratedOutput] = useState(""); // Store RL output
 
-    // OBJECTIVE FUNCTION
-  const [objectiveAst, setObjectiveAst] = useState<any | null>(null);
-  const [objectiveLocked, setObjectiveLocked] = useState(false);
-
-
-     //SQL
-  const [sql, setSql] = useState("");
-  const [queryResults, setQueryResults] = useState<any[] | null>(null);
-  const [isRunningQuery, setIsRunningQuery] = useState(false);
+  // OBJECTIVE FUNCTION (generated on submit)
+  const [objectiveFunction, setObjectiveFunction] = useState<any | null>(null);
+  const [editingObjective, setEditingObjective] = useState(false);
+  const [objectiveText, setObjectiveText] = useState("");
 
   // HISTORY
   const [history, setHistory] = useState<any[]>([]);
@@ -39,23 +32,6 @@ export default function Home() {
   // DEBUG PANEL
   const [debugLogs, setDebugLogs] = useState<string[]>([]);
   const [showDebug, setShowDebug] = useState(false);
-
-  // QUERY ANALYSIS
-  const [queryAnalysis, setQueryAnalysis] = useState<any | null>(null);
-
-  // OPTIMIZE SQL HOOK - Standalone React hook for RL optimization
-  const { optimizeSQL: runOptimization } = useOptimizeSQL({
-    tools: ["explain", "ai"],
-    onProgress: (log) => {
-      addDebugLog(`Iteration ${log.iteration}: ${log.passed ? "PASS ✓" : "FAIL ✗"} (Reward: ${log.reward})`);
-    },
-    onComplete: (result) => {
-      addDebugLog(`✓ Optimization complete! Final reward: ${result.optimizationMetadata.finalReward}`);
-    },
-    onError: (error) => {
-      addDebugLog(`✗ Optimization failed: ${error.message}`);
-    }
-  });
 
   const addDebugLog = (message: string) => {
     const timestamp = new Date().toLocaleTimeString();
@@ -77,91 +53,58 @@ export default function Home() {
     loadHistory();
   }, []);
 
-     //SEND / ENTER HANDLER
-
+  // SEND / ENTER HANDLER - Generate objective function
   const handleSend = async () => {
     const clean = userInput.trim();
     if (!clean) return;
 
-    addDebugLog(`User query: "${clean}"`);
+    addDebugLog(`User request: "${clean}"`);
     setConversation((prev) => [...prev, { role: "user", text: clean }]);
     setUserInput("");
+    setLastUserQuery(clean);
     setLoading(true);
+    setGeneratedOutput(""); // Clear previous output
 
     // Save to user history
     try {
-      addDebugLog("Saving to user history...");
       await fetch("/api/store-user-history", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ naturalText: clean }),
       });
-      addDebugLog("✓ Saved to user history");
     } catch (err) {
       console.error("Failed to save user history:", err);
-      addDebugLog("✗ Failed to save user history");
     }
 
     try {
-      // Step 1: Generate objective function
+      // Generate objective function
       addDebugLog("Generating objective function...");
-      const objRes = await fetch("/api/objective/generate", {
+      const objResponse = await fetch("/api/objective/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userInput: clean,
-          currentObjective: objectiveAst,
-        }),
+        body: JSON.stringify({ userInput: clean }),
       });
 
-      const objData = await objRes.json();
-      addDebugLog(`✓ Objective function generated`);
-      addDebugLog(`Entity: ${objData.objective?.entity?.identifier || "N/A"}`);
-
-      setObjectiveAst(objData.objective);
-      setObjectiveLocked(true); // Lock immediately since we're auto-generating
-      setStage("objective");
-
-      setConversation((prev) => [
-        ...prev,
-        {
-          role: "assistant",
-          text: "Objective function generated. Generating SQL query…",
-        },
-      ]);
-
-      // Step 2: Auto-generate SQL immediately
-      addDebugLog("Auto-generating SQL...");
-      const sqlStartTime = Date.now();
-      const sqlRes = await fetch("/api/sql/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ objective: objData.objective }),
-      });
-
-      const sqlData = await sqlRes.json();
-      const sqlDuration = Date.now() - sqlStartTime;
-
-      addDebugLog(`✓ SQL generated (${sqlDuration}ms)`);
-      addDebugLog(`Generated SQL: ${sqlData.sql}`);
-
-      setSql(sqlData.sql);
-      setStage("sql");
-
-      setConversation((prev) => [
-        ...prev,
-        { role: "assistant", text: "SQL query generated. You can run it, edit it, or optimize it with RL." },
-      ]);
+      const objData = await objResponse.json();
+      if (objData.objective) {
+        setObjectiveFunction(objData.objective);
+        addDebugLog(`✓ Objective function generated`);
+        
+        setConversation((prev) => [
+          ...prev,
+          { role: "assistant", text: "✓ Objective function ready! You can edit it or click 'Optimize with RL' to generate optimized output." },
+        ]);
+      }
     } catch (err) {
-      addDebugLog("✗ Failed to generate objective/SQL");
+      addDebugLog("✗ Failed to generate objective function");
       setConversation((prev) => [
         ...prev,
-        { role: "assistant", text: "Failed to generate objective function or SQL." },
+        { role: "assistant", text: "Sorry, I encountered an error generating the objective function." },
       ]);
     }
 
     setLoading(false);
-    loadHistory(); // Reload history after sending query
+    loadHistory();
   };
 
   const handleKeyDown = async (e: any) => {
@@ -171,141 +114,6 @@ export default function Home() {
     }
   };
 
-  // Generate SQL (fast, no RL)
-  const generateSQL = async () => {
-    if (!objectiveAst) return;
-
-    addDebugLog("Generating SQL...");
-    setStage("optimizing");
-
-    setConversation((prev) => [
-      ...prev,
-      { role: "assistant", text: "Generating SQL query…" },
-    ]);
-
-    try {
-      const startTime = Date.now();
-      const res = await fetch("/api/sql/generate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ objective: objectiveAst }),
-      });
-
-      const data = await res.json();
-      const duration = Date.now() - startTime;
-
-      addDebugLog(`✓ SQL generated (${duration}ms)`);
-      addDebugLog(`Generated SQL: ${data.sql}`);
-
-      setSql(data.sql);
-      setStage("sql");
-
-      setConversation((prev) => [
-        ...prev,
-        { role: "assistant", text: "SQL generated. You can run it or optimize it further." },
-      ]);
-    } catch (err) {
-      addDebugLog("✗ SQL generation failed");
-      setConversation((prev) => [
-        ...prev,
-        { role: "assistant", text: "Failed to generate SQL." },
-      ]);
-      setStage("objective");
-    }
-  };
-
-  // Optimize SQL using RL - Now using the standalone hook!
-  const optimizeSQL = async () => {
-    if (!objectiveAst) return;
-
-    addDebugLog("Starting RL optimization with analysis...");
-    setStage("optimizing");
-
-    setConversation((prev) => [
-      ...prev,
-      { role: "assistant", text: "Optimizing query using RL…" },
-    ]);
-
-    try {
-      // Use the hook's optimizeSQL function
-      const result = await runOptimization(objectiveAst);
-
-      // Store analysis data
-      if (result.analysis) {
-        setQueryAnalysis(result.analysis);
-        addDebugLog(`✓ Analysis: ${result.analysis.estimatedRows} rows, cost ${result.analysis.estimatedCost.toFixed(2)}`);
-        addDebugLog(`  Fields: ${result.analysis.fields.join(", ")}`);
-      }
-
-      // Log detailed iteration info
-      const iterationLogs = result.optimizationMetadata?.iterationLogs || [];
-      if (iterationLogs.length > 0) {
-        addDebugLog(`\n=== RL OPTIMIZATION LOOPS (${iterationLogs.length} iterations) ===`);
-        iterationLogs.forEach((log: any) => {
-          addDebugLog(`\n--- Iteration ${log.iteration} ---`);
-          addDebugLog(`Action: ${log.action}`);
-          addDebugLog(`Semantic Match: ${log.semanticMatch ? "YES ✓" : "NO ✗"}`);
-          if (log.semanticIssues && log.semanticIssues.length > 0) {
-            addDebugLog(`Semantic Issues: ${log.semanticIssues.join(", ")}`);
-          }
-          addDebugLog(`Reward: ${log.reward.total} (constraint: ${log.reward.constraintScore}, quality: ${log.reward.qualityScore})`);
-          if (log.reward.details && log.reward.details.length > 0) {
-            addDebugLog(`Reward Breakdown:`);
-            log.reward.details.forEach((detail: string) => addDebugLog(`  ${detail}`));
-          }
-          addDebugLog(`SQL: ${log.sql.substring(0, 80)}...`);
-          addDebugLog(`Converged: ${log.converged ? "YES ✓" : "NO ✗"}`);
-        });
-        addDebugLog(`\n=== END LOOPS ===`);
-      }
-
-      setSql(result.sql);
-      setStage("sql");
-
-      setConversation((prev) => [
-        ...prev,
-        { role: "assistant", text: "RL optimization complete. SQL is ready." },
-      ]);
-    } catch (err) {
-      addDebugLog("✗ RL optimization failed");
-      setConversation((prev) => [
-        ...prev,
-        { role: "assistant", text: "rlTool execution failed." },
-      ]);
-      setStage("objective");
-    }
-  };
-
-  const runQuery = async () => {
-    if (!sql) return;
-
-    setIsRunningQuery(true);
-    addDebugLog("Running SQL query...");
-
-    try {
-      const res = await fetch("/api/run-query", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sql }),
-      });
-
-      const data = await res.json();
-
-      if (data.error) {
-        addDebugLog(`✗ Query failed: ${data.error}`);
-        setQueryResults(null);
-      } else {
-        addDebugLog(`✓ Query returned ${data.rows.length} rows`);
-        setQueryResults(data.rows);
-      }
-    } catch (err: any) {
-      addDebugLog(`✗ Query execution error: ${err.message}`);
-      setQueryResults(null);
-    } finally {
-      setIsRunningQuery(false);
-    }
-  };
-//UI from here
   return (
     <div className="min-h-screen bg-white text-gray-900 p-6 flex">
       {/* HISTORY SIDEBAR */}
@@ -352,7 +160,7 @@ export default function Home() {
                 History
               </button>
             )}
-            <h1 className="text-4xl font-bold text-black">Quill chat</h1>
+            <h1 className="text-4xl font-bold text-black">AI Assistant</h1>
             <button
               onClick={() => setShowDebug(!showDebug)}
               className="px-4 py-2 bg-blue-100 hover:bg-blue-200 rounded-lg text-sm transition-colors"
@@ -360,7 +168,7 @@ export default function Home() {
               {showDebug ? "Hide Debug" : "Show Debug"}
             </button>
           </div>
-          <p className="text-gray-500 text-sm mt-2">Ask me anything about objectiveFunctions and SQL optimization</p>
+          <p className="text-gray-500 text-sm mt-2">Ask me anything - I'll help with SQL, content, analysis, and more</p>
         </div>
 
         {/* DEBUG PANEL */}
@@ -387,211 +195,208 @@ export default function Home() {
           </div>
         )}
 
-       <div className="max-w-7xl mx-auto flex gap-6">
-        <div className="bg-white rounded-3xl shadow-lg border border-gray-200 overflow-hidden transition-all flex flex-col w-[600px]">
-          <div className="flex-1 overflow-y-auto p-6 space-y-4 min-h-[300px] max-h-[500px]">
-            {conversation.map((msg, idx) => (
-              <div
-                key={idx}
-                className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-              >
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white rounded-3xl shadow-lg border border-gray-200 overflow-hidden transition-all flex flex-col">
+            <div className="flex-1 overflow-y-auto p-6 space-y-4 min-h-[300px] max-h-[500px]">
+              {conversation.map((msg, idx) => (
                 <div
-                  className={`max-w-[80%] px-5 py-3 rounded-2xl ${
-                    msg.role === "user"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-100 text-gray-900"
-                  }`}
-                  dangerouslySetInnerHTML={{ __html: msg.text }}
-                />
-              </div>
-            ))}
-          </div>
-
-          {stage === "optimizing" && (
-            <div className="px-6 pb-3">
-              <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm">
-                <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
-                Optimizing query...
-              </div>
-            </div>
-          )}
-
-          {/* Input Area */}
-          <div className="border-t border-gray-200 p-4 bg-gray-50">
-            <div className="flex gap-2 items-end">
-              <textarea
-                ref={textareaRef}
-                value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Send a message..."
-                rows={1}
-                className="flex-1 p-3 rounded-xl bg-white border border-gray-300 focus:border-blue-500 focus:outline-none resize-none transition-all text-gray-900 text-sm"
-              />
-              <button
-                onClick={handleSend}
-                disabled={loading}
-                className="px-5 py-3 bg-black hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed rounded-xl font-medium transition-colors text-white text-sm"
-              >
-                {loading ? "..." : "Send"}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex-1 flex flex-col gap-6 overflow-y-auto max-h-[calc(100vh-100px)]">
-          {/* Objective Function - Shows when available */}
-          {objectiveAst && (
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold text-black">Objective Function</h2>
-                {!objectiveLocked ? (
-                  <div className="flex gap-2">
-                    <button
-                      onClick={generateSQL}
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition-colors text-white"
-                    >
-                      Generate SQL
-                    </button>
-                    <button
-                      onClick={optimizeSQL}
-                      className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-sm font-medium transition-colors text-white"
-                    >
-                      Optimize with RL
-                    </button>
-                  </div>
-                ) : (
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setObjectiveLocked(false)}
-                      className="px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg text-sm font-medium transition-colors text-white"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={generateSQL}
-                      className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition-colors text-white"
-                    >
-                      Generate SQL
-                    </button>
-                    <button
-                      onClick={optimizeSQL}
-                      className="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-sm font-medium transition-colors text-white"
-                    >
-                      Optimize with RL
-                    </button>
-                  </div>
-                )}
-              </div>
-              <textarea
-                className="w-full h-[200px] rounded-lg bg-gray-50 border border-gray-300 font-mono text-xs p-4 focus:outline-none focus:border-blue-500 text-gray-900"
-                value={JSON.stringify(objectiveAst, null, 2)}
-                onChange={(e) => {
-                  try {
-                    setObjectiveAst(JSON.parse(e.target.value));
-                  } catch {}
-                }}
-                disabled={objectiveLocked}
-              />
-            </div>
-          )}
-
-          {/* SQL Editor - Always visible */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-black">SQL Query</h2>
-              {sql && (
-                <button
-                  onClick={runQuery}
-                  disabled={isRunningQuery}
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 rounded-lg text-sm font-medium transition-colors text-white"
+                  key={idx}
+                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
-                  {isRunningQuery ? "Running..." : "Run Query"}
+                  <div
+                    className={`max-w-[80%] px-5 py-3 rounded-2xl whitespace-pre-wrap ${
+                      msg.role === "user"
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-100 text-gray-900"
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {loading && (
+              <div className="px-6 pb-3">
+                <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm">
+                  <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></div>
+                  Generating response...
+                </div>
+              </div>
+            )}
+
+            {/* Input Area */}
+            <div className="border-t border-gray-200 p-4 bg-gray-50">
+              <div className="flex gap-2 items-end">
+                <textarea
+                  ref={textareaRef}
+                  value={userInput}
+                  onChange={(e) => setUserInput(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Ask me anything..."
+                  rows={1}
+                  className="flex-1 p-3 rounded-xl bg-white border border-gray-300 focus:border-blue-500 focus:outline-none resize-none transition-all text-gray-900 text-sm"
+                />
+                <button
+                  onClick={handleSend}
+                  disabled={loading}
+                  className="px-5 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed rounded-xl font-medium transition-colors text-white text-sm"
+                >
+                  {loading ? "..." : "Send"}
                 </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Optimize with RL Button */}
+          {lastUserQuery && (
+            <div className="mt-6 bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-lg font-semibold text-black">RL Optimization</h2>
+                  <p className="text-sm text-gray-500 mt-1">Generate optimized response using Reinforcement Learning</p>
+                </div>
+                <div className="flex gap-2">
+                  {objectiveFunction && (
+                    <button
+                      onClick={() => {
+                        if (!editingObjective) {
+                          setObjectiveText(JSON.stringify(objectiveFunction, null, 2));
+                          setEditingObjective(true);
+                        } else {
+                          try {
+                            const parsed = JSON.parse(objectiveText);
+                            setObjectiveFunction(parsed);
+                            setEditingObjective(false);
+                            addDebugLog("✓ Objective function updated");
+                          } catch (e) {
+                            alert("Invalid JSON format. Please fix and try again.");
+                          }
+                        }
+                      }}
+                      disabled={loading}
+                      className="px-3 py-2 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-400 rounded-lg text-sm font-medium text-white"
+                    >
+                      {editingObjective ? "Save Objective" : "Edit Objective"}
+                    </button>
+                  )}
+                  <button
+                    onClick={async () => {
+                      if (!objectiveFunction || !lastUserQuery) {
+                        alert("Please submit a query first to generate an objective function.");
+                        return;
+                      }
+                      
+                      addDebugLog("Starting RL optimization...");
+                      setLoading(true);
+                      
+                      try {
+                        // STEP 1: Generate basic response first
+                        addDebugLog("Generating basic response...");
+                        const basicResponse = await fetch("/api/generate", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ query: lastUserQuery }),
+                        });
+                        
+                        const basicData = await basicResponse.json();
+                        if (basicData.response) {
+                          // Show basic response in chat
+                          setConversation((prev) => [
+                            ...prev,
+                            { role: "assistant", text: `**Basic Response:**\n\n${basicData.response}` },
+                          ]);
+                          addDebugLog("✓ Basic response generated");
+                        }
+                        
+                        // STEP 2: Show optimizing message
+                        setConversation((prev) => [
+                          ...prev,
+                          { role: "assistant", text: "Now optimizing with Q-Learning RL..." },
+                        ]);
+                        
+                        // STEP 3: Run RL optimization
+                        addDebugLog("Running Q-Learning optimization...");
+                        const response = await fetch("/api/rl/optimize", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ 
+                            objective: objectiveFunction,
+                            userQuery: lastUserQuery
+                          }),
+                        });
+                        
+                        const data = await response.json();
+                        if (data.optimizedOutput) {
+                          // Store in Generated Output section
+                          setGeneratedOutput(data.optimizedOutput);
+                          
+                          addDebugLog(`✓ RL optimization complete in ${data.iterations} iterations!`);
+                          addDebugLog(`Final Reward: ${data.finalReward?.toFixed(2)}`);
+                          addDebugLog(`Converged: ${data.converged}`);
+                          
+                          // Log iteration details
+                          if (data.iterationLogs) {
+                            addDebugLog(`\n=== Q-LEARNING ITERATIONS ===`);
+                            data.iterationLogs.forEach((log: any) => {
+                              addDebugLog(`Iteration ${log.iteration}: Action=${log.action}, Reward=${log.reward?.total?.toFixed(2)}, Converged=${log.converged}`);
+                            });
+                          }
+                          
+                          // Update chat with success message
+                          setConversation((prev) => [
+                            ...prev.slice(0, -1), // Remove "optimizing..." message
+                            { role: "assistant", text: `✓ **RL-Optimized Output Generated**\n\nQ-Learning Metrics:\n- Iterations: ${data.iterations}\n- Final Reward: ${data.finalReward?.toFixed(2)}\n- Converged: ${data.converged ? 'Yes' : 'No'}\n\n Check the **Generated Output** section below for the optimized result.` },
+                          ]);
+                        }
+                      } catch (error: any) {
+                        addDebugLog(`✗ Optimization failed: ${error.message}`);
+                        setConversation((prev) => [
+                          ...prev.slice(0, -1),
+                          { role: "assistant", text: "Optimization failed. Please try again." },
+                        ]);
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}
+                    disabled={loading || !objectiveFunction}
+                    className="px-4 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 rounded-lg text-sm font-medium transition-colors text-white"
+                  >
+                    {loading ? "Optimizing..." : "Optimize with RL"}
+                  </button>
+                </div>
+              </div>
+              
+              {/* Objective Function Display */}
+              {objectiveFunction && (
+                <div className="mt-4">
+                  {editingObjective ? (
+                    <textarea
+                      value={objectiveText}
+                      onChange={(e) => setObjectiveText(e.target.value)}
+                      className="w-full p-4 bg-white border border-gray-300 rounded-lg font-mono text-xs text-gray-900 min-h-[200px] focus:border-blue-500 focus:outline-none"
+                      placeholder="Edit objective function JSON..."
+                    />
+                  ) : (
+                    <div className="p-4 bg-blue-50 rounded-lg font-mono text-xs text-gray-900 whitespace-pre-wrap max-h-[200px] overflow-y-auto">
+                      {JSON.stringify(objectiveFunction, null, 2)}
+                    </div>
+                  )}
+                </div>
               )}
             </div>
-            <textarea
-              className="w-full h-[200px] rounded-lg bg-gray-50 border border-gray-300 font-mono text-sm p-4 focus:outline-none focus:border-blue-500 text-gray-900"
-              value={sql}
-              onChange={(e) => setSql(e.target.value)}
-              placeholder="SQL query"
-            />
-          </div>
-
-          {/* Query Analysis - Shows after optimization */}
-          {queryAnalysis && (
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-black mb-4">Query Analysis (EXPLAIN)</h2>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="text-sm text-gray-600 mb-1">Estimated Rows</div>
-                  <div className="text-2xl font-bold text-gray-900">{queryAnalysis.estimatedRows}</div>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="text-sm text-gray-600 mb-1">Estimated Cost</div>
-                  <div className="text-2xl font-bold text-gray-900">{queryAnalysis.estimatedCost.toFixed(2)}</div>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg col-span-2">
-                  <div className="text-sm text-gray-600 mb-2">Query Features</div>
-                  <div className="flex gap-2 flex-wrap">
-                    {queryAnalysis.usesIndex && (
-                      <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
-                        ✓ Uses Index
-                      </span>
-                    )}
-                    {queryAnalysis.hasAggregation && (
-                      <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
-                        Aggregation
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="bg-gray-50 p-4 rounded-lg col-span-2">
-                  <div className="text-sm text-gray-600 mb-2">Selected Fields ({queryAnalysis.fields.length})</div>
-                  <div className="flex gap-2 flex-wrap">
-                    {queryAnalysis.fields.map((field: string, idx: number) => (
-                      <span key={idx} className="px-2 py-1 bg-white border border-gray-300 rounded text-xs font-mono text-gray-700">
-                        {field}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
           )}
-
-          {/* Query Results */}
-          {queryResults && (
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-black mb-4">Query Results ({queryResults.length} rows)</h2>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      {Object.keys(queryResults[0] || {}).map((key) => (
-                        <th key={key} className="text-left p-3 font-semibold text-gray-700">
-                          {key}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {queryResults.map((row, idx) => (
-                      <tr key={idx} className="border-b border-gray-100 hover:bg-gray-50">
-                        {Object.values(row).map((val: any, i) => (
-                          <td key={i} className="p-3 text-gray-900">
-                            {val !== null && val !== undefined ? String(val) : '-'}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+          
+          {/* Generated Output Section */}
+          {generatedOutput && (
+            <div className="mt-6 bg-white rounded-2xl shadow-lg border border-gray-200 p-6">
+              <h2 className="text-lg font-semibold text-black mb-4">Generated Output</h2>
+              <div className="p-4 bg-green-50 rounded-lg font-mono text-sm text-gray-900 whitespace-pre-wrap max-h-[500px] overflow-y-auto">
+                {generatedOutput}
               </div>
             </div>
           )}
         </div>
-      </div>
       </div>
     </div>
   );

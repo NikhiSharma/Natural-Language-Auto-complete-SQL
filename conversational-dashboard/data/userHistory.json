@@ -1,5 +1,190 @@
 [
   {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T03:54:54.936Z",
+    "id": "u-1766202894936"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T03:52:29.123Z",
+    "id": "u-1766202749123"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T03:50:55.484Z",
+    "id": "u-1766202655484"
+  },
+  {
+    "naturalText": "optimize this query\n\nSELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);",
+    "createdAt": "2025-12-20T03:49:42.266Z",
+    "id": "u-1766202582266"
+  },
+  {
+    "naturalText": "optimize this query\n\nSELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);",
+    "createdAt": "2025-12-20T03:46:17.131Z",
+    "id": "u-1766202377131"
+  },
+  {
+    "naturalText": "optimize this query\n\nSELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);",
+    "createdAt": "2025-12-20T03:39:14.735Z",
+    "id": "u-1766201954735"
+  },
+  {
+    "naturalText": "optimize this query\n\nSELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);",
+    "createdAt": "2025-12-20T03:35:49.051Z",
+    "id": "u-1766201749051"
+  },
+  {
+    "naturalText": "optimize this query\n\nSELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);",
+    "createdAt": "2025-12-20T03:18:14.655Z",
+    "id": "u-1766200694655"
+  },
+  {
+    "naturalText": "optimize this query\n\nSELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);",
+    "createdAt": "2025-12-20T03:17:12.750Z",
+    "id": "u-1766200632750"
+  },
+  {
+    "naturalText": "optimize this qery\n\nSELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);",
+    "createdAt": "2025-12-20T03:15:21.295Z",
+    "id": "u-1766200521295"
+  },
+  {
+    "naturalText": "optimize this query\n\nSELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);",
+    "createdAt": "2025-12-20T03:07:22.782Z",
+    "id": "u-1766200042782"
+  },
+  {
+    "naturalText": "optimize this\nYo wasshup myannnnnnnnnn how you doin? cant attend today's meet coz im not feelin well so ill join tomo bubbye",
+    "createdAt": "2025-12-20T03:06:19.913Z",
+    "id": "u-1766199979913"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T03:04:07.467Z",
+    "id": "u-1766199847467"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T03:02:14.802Z",
+    "id": "u-1766199734802"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:59:47.930Z",
+    "id": "u-1766199587931"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:55:29.512Z",
+    "id": "u-1766199329512"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:52:07.423Z",
+    "id": "u-1766199127423"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:47:58.758Z",
+    "id": "u-1766198878758"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:44:42.478Z",
+    "id": "u-1766198682478"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:43:02.246Z",
+    "id": "u-1766198582246"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:42:33.297Z",
+    "id": "u-1766198553297"
+  },
+  {
+    "naturalText": "optimize this teext\n\nSo tell me wassup and did y'all eat and all? hit me up with some news wot happened ysterday ok?\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:39:58.039Z",
+    "id": "u-1766198398039"
+  },
+  {
+    "naturalText": "optimize this teext\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:36:05.201Z",
+    "id": "u-1766198165201"
+  },
+  {
+    "naturalText": "optimize this teext\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:34:20.317Z",
+    "id": "u-1766198060317"
+  },
+  {
+    "naturalText": "optimize this teext\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:31:09.374Z",
+    "id": "u-1766197869374"
+  },
+  {
+    "naturalText": "optimize this teext\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:30:46.159Z",
+    "id": "u-1766197846159"
+  },
+  {
+    "naturalText": "optimize this teext\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:30:23.873Z",
+    "id": "u-1766197823873"
+  },
+  {
+    "naturalText": "optimize this teext\n\nhey so basically i just wanted to say that this thing is like really important\nand we should probably look into it asap because it’s kinda urgent lol",
+    "createdAt": "2025-12-20T02:28:10.849Z",
+    "id": "u-1766197690849"
+  },
+  {
+    "naturalText": "Optimize this query.\n\nSELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);",
+    "createdAt": "2025-12-20T02:25:26.379Z",
+    "id": "u-1766197526379"
+  },
+  {
+    "naturalText": "draft a good mail for me in the below mail\n\n\"yo myan wassup, how was ur day huh, lemme know, let's catch up on drinks n shit\"",
+    "createdAt": "2025-12-20T02:24:55.013Z",
+    "id": "u-1766197495013"
+  },
+  {
+    "naturalText": "Optimize my query here\n\nSELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);",
+    "createdAt": "2025-12-20T02:22:55.869Z",
+    "id": "u-1766197375869"
+  },
+  {
+    "naturalText": "SELECT \n  e.id,\n  e.name,\n  d.name AS department_name,\n  (\n    SELECT SUM(c.amount)\n    FROM compensation c\n    WHERE c.employee_id = e.id\n  ) AS total_compensation\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.id\nWHERE e.status = 'active'\nAND e.id IN (\n  SELECT employee_id\n  FROM compensation\n  WHERE year >= 2022\n);\n\n\noptimize this query well and give me",
+    "createdAt": "2025-12-20T02:20:25.054Z",
+    "id": "u-1766197225054"
+  },
+  {
+    "naturalText": "Generate an objective Fucntion to optimize my email in the bottom\n\nyo man wassup, how u doin phil? gimme some deetails bout the project u did yesterday. talk soon yo",
+    "createdAt": "2025-12-20T02:17:09.923Z",
+    "id": "u-1766197029923"
+  },
+  {
+    "naturalText": "yo myan wassup give me some deetails bout wot happened yesterday and shit. yo. \n\noptimize this text",
+    "createdAt": "2025-12-20T02:13:45.753Z",
+    "id": "u-1766196825753"
+  },
+  {
+    "naturalText": "Give me some nice optimized version of this\n\n\"yo wasshup ma myan give me some deetails bout what hapened todayh\"",
+    "createdAt": "2025-12-20T02:11:27.102Z",
+    "id": "u-1766196687102"
+  },
+  {
+    "naturalText": "Optimize my txt. \"yo wassup myaaan, how u doin huh lmaooooo\"",
+    "createdAt": "2025-12-20T01:54:41.374Z",
+    "id": "u-1766195681374"
+  },
+  {
+    "naturalText": "give me a basic mail to optimize like, yo wassup im tryna reach you but u aint there yo wass wrong huh?",
+    "createdAt": "2025-12-20T01:49:27.780Z",
+    "id": "u-1766195367780"
+  },
+  {
     "naturalText": "Now optimize this query assuming employee_teams has high cardinality.",
     "createdAt": "2025-12-18T21:59:28.537Z",
     "id": "u-1766095168537"

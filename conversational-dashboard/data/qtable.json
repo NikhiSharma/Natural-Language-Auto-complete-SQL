@@ -1,357 +1,156 @@
 {
   "version": 1,
-  "updatedAt": "2025-12-19T02:33:54.093Z",
+  "updatedAt": "2025-12-20T03:55:18.539Z",
   "hyperparams": {
     "alpha": 0.1,
     "gamma": 0.9,
-    "epsilon": 0.1163918888680597,
+    "epsilon": 0.19213860871508737,
     "epsilonDecay": 0.995,
     "epsilonMin": 0.05,
     "maxQTableSize": 10000,
     "maxExperiences": 1000
   },
   "qtable": {
-    "*||merchant_name = 'not Starbucks'||||0||0||eb5c61b5": {
-      "llm_policy": 11.995000000000001
+    "e3efc206d89fc8d5": {
+      "USE_GENERATOR": -3
     },
-    "*||||||0||0||45740de2": {
-      "llm_policy": 30.90625714369207,
-      "add_agg": 6.045000000000001,
-      "add_where": 3.5450000000000004
+    "21e4690762f97f63": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name = 'excluding Starbucks'||||0||0||eb5c61b5": {
-      "llm_policy": 11.995000000000001
+    "ed516662acfabeb0": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name = 'excluding Starbucks'||||0||0||baea83c2": {
-      "llm_policy": 11.995000000000001
+    "bd19808b71c95d69": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name = 'excluding Starbucks'||||0||0||2c0f3a08": {
-      "llm_policy": 36.884586505,
-      "modify_where": 8.545
+    "4f71f0eddaa4f885": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name IN ('excluding Starbucks')||||0||0||2c0f3a08": {
-      "llm_policy": 12.26961278545
+    "45262ae27284eccb": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name IN ('Uber', 'Starbucks')||||0||0||ff0cc87a": {
-      "llm_policy": 104.5458909623767,
-      "add_order": 8.545
+    "7a9cdac6529ffd82": {
+      "REFINE": 7
     },
-    "*||||||0||0||2494e2b2": {
-      "llm_policy": 242.49360701006984,
-      "fix_entity": 12.716753455000001,
-      "add_order": 10.045000000000002,
-      "modify_where": 43.94260901248139,
-      "add_agg": 3.5450000000000004
+    "057aa92ec88ed6b8": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name = 'Starbucks'||||0||0||59a1f1dd": {
-      "llm_policy": 393.64346908690123,
-      "add_agg": 6.7355,
-      "add_order": 10.045000000000002,
-      "fix_entity": 115.91194276904733
+    "333bb78a95d0955e": {
+      "USE_GENERATOR": 7
     },
-    "*||merchant_name = 'Starbucks'||||0||0||dc85eaaa": {
-      "llm_policy": 30.186149500000003,
-      "add_agg": 3.5450000000000004
+    "855460e6bccdab7a": {
+      "USE_GENERATOR": -3
     },
-    "SUM(amount)||merchant_name = 'Starbucks'||SUM(AMOUNT)||0||0||dc85eaaa": {
-      "llm_policy": 13.166753455
+    "62f97cb89c7190e5": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name IN ('Starbucks', 'uber')||||0||0||dc85eaaa": {
-      "llm_policy": 25.730999500000003,
-      "add_order": 8.545
+    "36bf205acc6c73ce": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name IN ('Starbucks', 'uber')||||0||1||dc85eaaa": {
-      "llm_policy": 11.265789955
+    "f31d5b3b013500ec": {
+      "USE_GENERATOR": -3
     },
-    "*||||||0||0||c1dd3ac0": {
-      "llm_policy": 7.259497883254496,
-      "add_order": 4.045000000000001,
-      "add_agg": 2.545
+    "c1b97a41a6fd7cb5": {
+      "RESET": -3
     },
-    "*||||||0||1||c1dd3ac0": {
-      "llm_policy": 1.9338841031455
+    "03b5c60d87cf2c72": {
+      "USE_GENERATOR": -3
     },
-    "*||||||0||0||256fcf9e": {
-      "add_where": 7.27955
+    "91b6b1ce3be5b3dd": {
+      "USE_GENERATOR": -3
     },
-    "*||amount > 0;||||0||0||256fcf9e": {
-      "add_order": 12.660050000000002
+    "87a69755959904a9": {
+      "USE_GENERATOR": -3
     },
-    "*||amount > 0;||||0||1||256fcf9e": {
-      "llm_policy": 2.995
+    "23e45445645a1155": {
+      "USE_GENERATOR": 7
     },
-    "SUM(amount)||merchant_name = 'Starbucks'||SUM(AMOUNT)||0||0||59a1f1dd": {
-      "remove_agg": 65.09995579034721
+    "de810503c1b2e6d9": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name = 'Uber'||||0||0||e25f560f": {
-      "llm_policy": 77.71667791929387,
-      "add_agg": 3.5450000000000004
+    "6593b6331fffbcf8": {
+      "USE_GENERATOR": 7
     },
-    "SUM(amount)||merchant_name = 'Uber'||SUM(AMOUNT)||0||0||e25f560f": {
-      "llm_policy": 12.285104500000001
+    "0f24547e7e2d5446": {
+      "PERTURB_OUTPUT": -3
     },
-    "*||merchant_name = 'Starbucks'||||0||1||59a1f1dd": {
-      "llm_policy": 33.23813425440125
+    "42d04f46d175b738": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name IN ('Uber', 'Starbucks')||||0||1||ff0cc87a": {
-      "llm_policy": 12.742055734895501
+    "9f79bf10a620ca76": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name = 'Uber'||||0||0||6f7ed56b": {
-      "llm_policy": 39.884288005,
-      "fix_entity": 12.716753455000001
+    "17cede95f04be915": {
+      "USE_GENERATOR": -3
     },
-    "*||merchant_name = 'Uber'||||0||0||d45bd09c": {
-      "llm_policy": 49.485445124950004
+    "708e183fac871f99": {
+      "USE_GENERATOR": -3
     },
-    "SUM(amount)||||SUM(AMOUNT)||0||0||2494e2b2": {
-      "llm_policy": 29.774322843686623
+    "114b6c32ec3c1436": {
+      "USE_GENERATOR": -3
     },
-    "*||||||0||0||cfb118b9": {
-      "llm_policy": 49.485445124950004
+    "946f6d03d79428fa": {
+      "USE_GENERATOR": -3
     },
-    "*||||||0||0||94cfc070": {
-      "llm_policy": -3.005,
-      "add_where": -2.455,
-      "fix_entity": -3.5,
-      "add_agg": -1.955
+    "ff3f4712caa0605f": {
+      "USE_GENERATOR": -3
     },
-    "*||amount > 0;||||0||0||94cfc070": {
-      "llm_policy": -3.0500000000000003
+    "1c8baa3406d6d539": {
+      "USE_GENERATOR": -3
     },
-    "*||||||0||0||cd4e8a8e": {
-      "llm_policy": 23.37505
+    "101bf5bd4a88fe37": {
+      "USE_GENERATOR": -3
     },
-    "*||||||0||0||a2928b43": {
-      "llm_policy": 11.995000000000001
+    "c5552025654b0c8f": {
+      "REFINE": -3
     },
-    "*||||||0||0||0a6e7423": {
-      "llm_policy": 11.995000000000001
+    "a1f7a8a201a2cbb9": {
+      "EXPAND": -3
     },
-    "*||||||0||0||28eebf58": {
-      "llm_policy": -0.0050000000000000044,
-      "add_where": 1.4364500000000002
+    "336ecc8e7c4eb850": {
+      "USE_GENERATOR": -3
     },
-    "*||amount > 0;||||0||0||28eebf58": {
-      "llm_policy": -0.050000000000000044,
-      "fix_entity": 4.780896249559776
+    "b46931f6b13a3f33": {
+      "PERTURB_OUTPUT": -3
     },
-    "*||||||0||0||b2b3b224": {
-      "llm_policy": 23.37505
+    "551d7c5561a3b47c": {
+      "USE_GENERATOR": -3
     },
-    "*||||||0||0||04c34904": {
-      "llm_policy": -0.0050000000000000044,
-      "add_where": 13.37274
+    "5c77b03e56de5ca1": {
+      "RESET": -3
     },
-    "*||amount > 0;||||0||0||04c34904": {
-      "add_agg": 12.23145
+    "2d51c12aed20a00f": {
+      "USE_GENERATOR": -3
     },
-    "SUM(amount)||amount > 0;||SUM(AMOUNT)||0||0||04c34904": {
-      "llm_policy": -0.050000000000000044,
-      "add_column": 4.545000000000001
+    "54b5126a5f5db568": {
+      "USE_GENERATOR": -3
     },
-    "SUM(amount),amount||amount > 0;||SUM(AMOUNT)||0||0||04c34904": {
-      "llm_policy": -0.050000000000000044
+    "4ce4b44a5595a235": {
+      "USE_GENERATOR": 7
     },
-    "c.salary,e.name||d.name = 'Engineering'||||0||0||8572f438": {
-      "llm_policy": 11.995000000000001
+    "371338130812052d": {
+      "USE_GENERATOR": -3
     },
-    "c.salary,e.name||||||0||0||e0510314": {
-      "llm_policy": 214.27272844478014,
-      "add_agg": 4.413832466485786
+    "41b4bef63e799a04": {
+      "EXPAND": -3
     },
-    "SUM(amount)||||SUM(AMOUNT)||0||0||e0510314": {
-      "llm_policy": 27.48147184984207
+    "f453a79e6426594c": {
+      "USE_GENERATOR": -3
     },
-    "e.name||d.name = 'Engineering';||||0||0||a31629fe": {
-      "llm_policy": 12.495000000000001
+    "0338884431b375e4": {
+      "USE_GENERATOR": -3
     },
-    "e.name||c.salary > 140000;||||0||0||edf8b172": {
-      "add_order": 12.045000000000002
+    "69f59b0e7e84f1a8": {
+      "PERTURB_OUTPUT": -3
     },
-    "||d.name = 'Engineering';||||0||0||7bf24480": {
-      "llm_policy": 130.78661643522773,
-      "modify_where": 17.564916050795166
+    "12b042dd06d06051": {
+      "EXPAND": -3
     },
-    "e.name||d.name = 'Engineering';||||0||0||9e931471": {
-      "add_order": 12.045000000000002
+    "d607ab5e05238128": {
+      "USE_GENERATOR": -3
     },
-    "e.name||d.name = 'Engineering';||||0||0||3590cc78": {
-      "llm_policy": 12.495000000000001
-    },
-    "e.name||||||0||0||fb1fe830": {
-      "llm_policy": 12.495000000000001
-    },
-    "e.name||e.city = 'Seattle';||||0||0||21f257a8": {
-      "llm_policy": 21.090500000000002
-    },
-    "||||||0||0||d8651d43": {
-      "llm_policy": 32.65665790415051,
-      "add_where": 14.305393550000002,
-      "add_order": 7.545000000000001
-    },
-    "||||||0||1||d8651d43": {
-      "llm_policy": 6.9791545
-    },
-    "||||||0||0||b2c0d894": {
-      "llm_policy": 62.603842281781496
-    },
-    "||||||0||0||6150d328": {
-      "llm_policy": 6.995000000000001,
-      "add_agg": 56.79470305801052
-    },
-    "||||||0||0||40e38454": {
-      "llm_policy": 4.337348250743596,
-      "add_order": 3.5450000000000004
-    },
-    "||||||0||1||40e38454": {
-      "llm_policy": 1.255705934418545
-    },
-    "||c.salary > 140000;||||0||0||4b0fbbb1": {
-      "llm_policy": 39.37399725610342,
-      "add_column": 6.912420555982546
-    },
-    "||||||1||1||3154ab4f": {
-      "llm_policy": 147.4774379015523,
-      "add_agg": 20.088804500000002
-    },
-    "||||||0||1||4691d6d6": {
-      "llm_policy": 7.995000000000001,
-      "add_column": 65.52602533214494
-    },
-    "||||||1||1||5da16114": {
-      "llm_policy": 121.53261214664457,
-      "fix_entity": 23.775692013331327
-    },
-    "||||||1||1||f3e9d8e6": {
-      "llm_policy": 220.30100085919435,
-      "add_column": 19.008129560449998,
-      "add_agg": 22.601709104375075,
-      "add_where": 31.671349941156507
-    },
-    "||||||0||1||bdf0cd79": {
-      "llm_policy": 71.84016507854514,
-      "fix_entity": 10.411698865273458
-    },
-    "1||||||0||1||bdf0cd79": {
-      "llm_policy": 10.724578978746111
-    },
-    "||||||1||1||fb57d6ef": {
-      "fix_entity": 121.11737703415201,
-      "llm_policy": 24.187943366741095
-    },
-    "||||||0||0||432b6b8a": {
-      "llm_policy": 4.995
-    },
-    "||||||0||1||432b6b8a": {
-      "llm_policy": 35.22625985464992,
-      "fix_entity": 5.746553955
-    },
-    "||et.employee_id IS NULL;||||0||0||854bd143": {
-      "llm_policy": 5.495000000000001,
-      "add_order": 7.545000000000001
-    },
-    "1||||||0||0||854bd143": {
-      "fix_entity": 67.08392371098034,
-      "remove_column": 3.5450000000000004
-    },
-    "*||||||0||0||854bd143": {
-      "llm_policy": 4.9445500000000004
-    },
-    "||et.employee_id IS NULL;||||0||1||854bd143": {
-      "llm_policy": 9.93265239270393
-    },
-    "||||||0||0||fb4f65cf": {
-      "llm_policy": 30.72572200446751,
-      "add_where": 4.3595500000000005,
-      "add_order": 7.045000000000001
-    },
-    "||||||0||1||fb4f65cf": {
-      "llm_policy": 35.04985963028546
-    },
-    "||||||0||0||c17b85d0": {
-      "add_column": 82.78105171865847,
-      "llm_policy": 7.227109260950001,
-      "add_agg": 8.895460979248593
-    },
-    "||||||0||0||f3e9d8e6": {
-      "llm_policy": 13.386808628123667
-    },
-    "||||||0||1||f3e9d8e6": {
-      "llm_policy": 78.52414601918109,
-      "fix_entity": 11.296983105526273
-    },
-    "1||||||0||0||bdf0cd79": {
-      "llm_policy": 45.722629427213576
-    },
-    "||et.employee_id IS NULL;||||0||0||bdf0cd79": {
-      "llm_policy": 49.91000800159692
-    },
-    "||||||0||0||53e1b6ec": {
-      "llm_policy": 20.911079803955,
-      "add_agg": 5.086607980395501
-    },
-    "et.team_id||||||0||1||53e1b6ec": {
-      "llm_policy": 8.495000000000001
-    },
-    "||||MIN(ET.TEAM_ID)||1||0||53e1b6ec": {
-      "llm_policy": 5.495000000000001
-    },
-    "et1.team_id||||||0||1||53e1b6ec": {
-      "llm_policy": 5.495000000000001
-    },
-    "||||||0||0||5ff742fa": {
-      "llm_policy": 48.26115353310216
-    },
-    "||||||0||0||7b92570e": {
-      "llm_policy": 74.88606422818563,
-      "add_order": 7.545000000000001
-    },
-    "||||||0||1||7b92570e": {
-      "llm_policy": 9.59130001472399
-    },
-    "||||AVG(C.SALARY)||1||0||76a07ef6": {
-      "llm_policy": 78.90184316037299
-    },
-    "||||||0||0||76a07ef6": {
-      "llm_policy": 55.391353912317555,
-      "add_order": 20.4748045,
-      "add_where": 10.067928439895502,
-      "fix_entity": 11.130609012954006,
-      "add_column": 8.217395810210688
-    },
-    "||||||0||1||76a07ef6": {
-      "add_where": 21.8298045,
-      "llm_policy": 12.653716269710689
-    },
-    "||||||0||0||121eda52": {
-      "llm_policy": 59.498757160344255,
-      "add_order": 17.916259883678045
-    },
-    "||||||0||1||121eda52": {
-      "llm_policy": 66.06146652189534
-    },
-    "||||||1||0||4a08f883": {
-      "llm_policy": 3.495
-    },
-    "||||||0||0||4a08f883": {
-      "llm_policy": 16.995
-    },
-    "||||||1||1||4a08f883": {
-      "add_column": 127.51319713458766
-    },
-    "||||||1||1||0b895a60": {
-      "llm_policy": 251.712362182409,
-      "add_column": 23.100227366645502,
-      "fix_entity": 24.46922509297905,
-      "add_where": 27.666287513628767
-    },
-    "||||||0||0||d4c25b48": {
-      "llm_policy": 131.0926784662665,
-      "add_where": 11.22104663563518,
-      "add_column": 28.130899308523148
-    },
-    "||||||0||0||9858963c": {
-      "llm_policy": 38.699361033982605
+    "b4d9f20e90d7dc62": {
+      "USE_GENERATOR": 7
     }
   }
 }

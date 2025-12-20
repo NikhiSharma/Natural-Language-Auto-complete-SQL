@@ -20,7 +20,8 @@ export type Feedback = {
 };
 
 export async function rlTool(
-  rawObjective: any
+  rawObjective: any,
+  aiEndpoint?: string
 ): Promise<{ sql: string; iterations?: number; finalReward?: number; iterationLogs?: any[] }> {
   const objective = normalizeObjective(rawObjective);
 
@@ -31,11 +32,14 @@ export async function rlTool(
 
   console.log("[RL] Using live database schema with", schema.tables.length, "tables");
 
+  // Create generateSQL function with custom AI endpoint
+  const generateSQLFn = (input: any) => generateSQL(input, aiEndpoint);
+
   // Use Q-Learning optimizer with real schema
   const result = await optimizeSQL(
     objective,
     schema,
-    generateSQL,
+    generateSQLFn,
     evaluateSQL,
     explainQuery
   );
@@ -91,7 +95,7 @@ export async function generateSQL(input: {
   schema: Schema;
   previousSql: string | null;
   feedback: Feedback | null;
-}): Promise<string> {
+}, aiEndpoint?: string): Promise<string> {
   const { objective, schema, previousSql, feedback } = input;
 
   // Fetch detailed schema for richer context
@@ -157,24 +161,36 @@ CONSTRAINTS TO PRESERVE (CRITICAL):
 OUTPUT: Return ONLY the selected optimized PostgreSQL query, no explanations or markdown
 `;
 
-  if (!process.env.OPENAI_API_KEY) {
+  // Use custom AI endpoint or default to OpenAI
+  const endpoint = aiEndpoint || "https://api.openai.com/v1/chat/completions";
+  const isOpenAI = !aiEndpoint || aiEndpoint.includes("openai.com");
+
+  if (isOpenAI && !process.env.OPENAI_API_KEY) {
     throw new Error("OPENAI_API_KEY not configured - cannot generate SQL without LLM");
   }
 
-  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+
+  // Add authorization header for OpenAI
+  if (isOpenAI && process.env.OPENAI_API_KEY) {
+    headers["Authorization"] = `Bearer ${process.env.OPENAI_API_KEY}`;
+  }
+
+  const body = {
+    model: RL_MODEL,
+    temperature: 0.1,
+    messages: [
+      { role: "system", content: "You are a PostgreSQL expert. Return ONLY valid SQL queries." },
+      { role: "user", content: prompt },
+    ],
+  };
+
+  const res = await fetch(endpoint, {
     method: "POST",
-    headers: {
-      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: RL_MODEL,
-      temperature: 0.1,
-      messages: [
-        { role: "system", content: "You are a PostgreSQL expert. Return ONLY valid SQL queries." },
-        { role: "user", content: prompt },
-      ],
-    }),
+    headers,
+    body: JSON.stringify(body),
   });
 
   const json = await res.json();
