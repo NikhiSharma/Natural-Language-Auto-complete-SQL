@@ -1,6 +1,6 @@
-# AI Assistant with Q-Learning Reinforcement Learning
+# RL-tool
 
-A domain-agnostic AI assistant that uses Q-learning reinforcement learning to optimize responses in real-time. Works for SQL queries, content creation, code optimization, data analysis, and more.
+A domain-agnostic rl-tool that uses Q-learning reinforcement learning to optimize responses in real-time. Works for SQL queries, content creation, code optimization, data analysis, and more.
 
 ##  What It Does
 
