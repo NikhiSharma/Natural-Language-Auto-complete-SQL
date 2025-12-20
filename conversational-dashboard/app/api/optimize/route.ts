@@ -1,5 +1,3 @@
-import { handleRLRequest } from "@nikhilayeturi23/rltool/backend";
-
 export async function POST(req: Request) {
   const apiKey = process.env.OPENAI_API_KEY;
   
