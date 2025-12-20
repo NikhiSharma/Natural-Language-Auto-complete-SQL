@@ -163,15 +163,6 @@ Shows real-time RL iteration logs:
 - Temperature: 0.8
 - Model: gpt-4o-mini
 
-##  How to Demo
-
-1. **Start simple**: "Write a professional email about a meeting"
-2. **Show objective**: Point out the generated constraints
-3. **Edit objective**: Add "must include meeting time" constraint
-4. **Run optimization**: Watch Q-learning iterations in debug panel
-5. **Compare outputs**: Basic vs optimized in chat vs Generated Output section
-6. **Show learning**: Open `data/qtable.json` to show Q-values growing
-
 ##  Understanding the Output
 
 **Chat Section**
@@ -206,41 +197,3 @@ Edit `lib/rl/qlearning.ts`:
 // Line ~10: Initial epsilon
 export const INITIAL_EPSILON = 0.2;  // Higher = more exploration
 ```
-
-### Modify Reward Weights
-Edit `lib/rl/generic/reward.ts`:
-```typescript
-// Line ~50: Constraint vs quality balance
-constraintScore: 60,  // Max points for constraints
-qualityScore: 40,     // Max points for quality
-```
-
-##  Notes
-
-- First few optimizations will be slower (cold start)
-- Q-table improves with usage - be patient
-- Delete `data/qtable.json` to reset learning
-- System is domain-agnostic by design
-- Objective quality directly impacts optimization success
-
-##  Troubleshooting
-
-**"Optimization failed"**
-- Check OpenAI API key in `.env.local`
-- Verify API key has credits
-- Check terminal for detailed error logs
-
-**Slow optimization (>30 seconds)**
-- Normal for first 3-5 uses
-- Q-table needs time to learn
-- Check debug panel for iteration count
-
-**Not converging**
-- Objective constraints may be too strict
-- Edit objective to relax requirements
-- Check mustInclude/mustAvoid lists
-
-
----
-
-**Built with ❤️ using custom Q-learning implementation (no external RL libraries)**
